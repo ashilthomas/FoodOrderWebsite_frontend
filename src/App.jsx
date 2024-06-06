@@ -11,13 +11,7 @@ import Footer from './components/Footer/Footer'
 function App() {
   return (
     <div className="">
-      <Header/>
-      <Hero/>
-      <ExploreItems/>
-      <Restaurants/>
-      <Offers/>
-      <Appdownloade/>
-      <Footer/>
+    
       </div>
   )
 }

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Cards from '../Cards/Cards';
+import Itemdetails from '../itemDetails/Itemdetails';
 
 const dishes = [
   {
@@ -88,15 +89,27 @@ const dishes = [
 //   };
 
 const Restaurants = () => {
+
+    const [isOverlayVisible, setOverlayVisible] = useState(false);
+
+  const handleOpenOverlay = () => {
+    setOverlayVisible(true);
+  };
+
+  const handleCloseOverlay = () => {
+    setOverlayVisible(false);
+  };
   return (
-    <div className="max-w-[1300px] mx-auto py-14">
+    <>
+   <Itemdetails isVisible={isOverlayVisible} onClose={handleCloseOverlay}/>
+    <div className="max-w-[1300px] mx-auto py-14" onClick={handleOpenOverlay}>
       <h2 className="text-2xl font-extrabold text-gray-900 mb-6">Top dishes near you</h2>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {dishes.map((dish, index) => (
           <Cards key={index} dish={dish} />
         ))}
       </div>
-    </div>
+    </div>  </>
   );
 };
 

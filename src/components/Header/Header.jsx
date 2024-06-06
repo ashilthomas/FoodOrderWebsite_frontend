@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Disclosure,
   DisclosureButton,
@@ -8,20 +8,20 @@ import {
   MenuItem,
   MenuItems,
   Transition,
-} from '@headlessui/react';
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+} from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { BsCart2 } from "react-icons/bs";
 
-function Header() {
+function Header({setIsOverlayVisible}) {
   const navigation = [
-    { name: 'Home', href: '#', current: false },
-    { name: 'About', href: '#', current: false },
-    { name: 'Menu', href: '#', current: false },
-    { name: 'Contact', href: '#', current: false },
+    { name: "Home", href: "#", current: false },
+    { name: "About", href: "#", current: false },
+    { name: "Menu", href: "#", current: false },
+    { name: "Contact", href: "#", current: false },
   ];
 
   function classNames(...classes) {
-    return classes.filter(Boolean).join(' ');
+    return classes.filter(Boolean).join(" ");
   }
 
   return (
@@ -58,10 +58,12 @@ function Header() {
                           key={item.name}
                           href={item.href}
                           className={classNames(
-                            item.current ? 'text-white' : 'text-stone-900 hover:bg-gray-700 hover:text-white',
-                            'rounded-md px-3 py-2 text-sm font-medium'
+                            item.current
+                              ? "text-white"
+                              : "text-stone-900 hover:bg-gray-700 hover:text-white",
+                            "rounded-md px-3 py-2 text-sm font-medium"
                           )}
-                          aria-current={item.current ? 'page' : undefined}
+                          aria-current={item.current ? "page" : undefined}
                         >
                           {item.name}
                         </a>
@@ -77,7 +79,9 @@ function Header() {
                       <span className="sr-only">View notifications</span>
                       <BsCart2 className="h-6 w-6" aria-hidden="true" />
                     </button>
-                 
+                    <button onClick={()=>setIsOverlayVisible(true)} className="ml-2 bg-orange-500 text-white py-2 px-8 rounded-full shadow-lg hover:bg-orange-600 transition duration-300">
+                      Sign
+                    </button>
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
@@ -105,7 +109,10 @@ function Header() {
                             {({ active }) => (
                               <a
                                 href="#"
-                                className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
                               >
                                 Your Profile
                               </a>
@@ -115,7 +122,10 @@ function Header() {
                             {({ active }) => (
                               <a
                                 href="#"
-                                className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
                               >
                                 Settings
                               </a>
@@ -125,7 +135,10 @@ function Header() {
                             {({ active }) => (
                               <a
                                 href="#"
-                                className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                className={classNames(
+                                  active ? "bg-gray-100" : "",
+                                  "block px-4 py-2 text-sm text-gray-700"
+                                )}
                               >
                                 Sign out
                               </a>
@@ -147,10 +160,12 @@ function Header() {
                     as="a"
                     href={item.href}
                     className={classNames(
-                      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                      'block rounded-md px-3 py-2 text-base font-medium'
+                      item.current
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                      "block rounded-md px-3 py-2 text-base font-medium"
                     )}
-                    aria-current={item.current ? 'page' : undefined}
+                    aria-current={item.current ? "page" : undefined}
                   >
                     {item.name}
                   </DisclosureButton>
@@ -165,4 +180,3 @@ function Header() {
 }
 
 export default Header;
-

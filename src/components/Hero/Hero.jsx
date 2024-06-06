@@ -21,7 +21,7 @@ function Hero() {
           quaerat repellat, aspernatur laudantium ex dignissimos voluptatem
           ratione veniam consequuntur eius?
         </p>
-        <button class="bg-orange-400 hover:bg-orange-500 text-black font-medium py-2 px-4 w-48 mt-5 rounded-lg">
+        <button class="bg-orange-500 hover:bg-orange-600 text-white font-medium py-2 px-4 w-48 mt-5 rounded-lg">
           view more
         </button>
       </div> 
