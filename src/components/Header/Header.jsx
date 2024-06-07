@@ -11,10 +11,11 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { BsCart2 } from "react-icons/bs";
+import { NavLink } from "react-router-dom";
 
 function Header({setIsOverlayVisible}) {
   const navigation = [
-    { name: "Home", href: "#", current: false },
+    { name: "Home", href: "#", current: false ,route:"/" },
     { name: "About", href: "#", current: false },
     { name: "Menu", href: "#", current: false },
     { name: "Contact", href: "#", current: false },
@@ -54,19 +55,21 @@ function Header({setIsOverlayVisible}) {
                   <div className="hidden sm:block">
                     <div className="flex space-x-4 justify-center">
                       {navigation.map((item) => (
+                        <NavLink to={item.route}>
                         <a
                           key={item.name}
                           href={item.href}
                           className={classNames(
                             item.current
                               ? "text-white"
-                              : "text-stone-900 hover:bg-gray-700 hover:text-white",
+                              : "text-stone-900 hover:bg-orange-500 hover:text-white",
                             "rounded-md px-3 py-2 text-sm font-medium"
                           )}
                           aria-current={item.current ? "page" : undefined}
                         >
                           {item.name}
                         </a>
+                        </NavLink>
                       ))}
                     </div>
                   </div>

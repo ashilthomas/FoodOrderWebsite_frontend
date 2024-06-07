@@ -7,22 +7,20 @@ import Offers from "../../components/Offers/Offers";
 import Appdownloade from "../../components/Appdownload/Appdownloade";
 import Footer from "../../components/Footer/Footer";
 import Loginpopup from "../../components/Register/Loginpopup";
+import MenuItems from "../../components/MenuItems/MenuItems";
 
 function Home() {
-    const [isOverlayVisible, setIsOverlayVisible] = useState(false);
+
   return (
     <div>
-        {
-            isOverlayVisible &&<Loginpopup setIsOverlayVisible={setIsOverlayVisible}/>
-        }
-      
-      <Header setIsOverlayVisible={setIsOverlayVisible}/>
+   
       <Hero />
       <ExploreItems />
       <Restaurants />
       <Offers />
       <Appdownloade />
       <Footer />
+     
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Cards from '../Cards/Cards';
 import Itemdetails from '../itemDetails/Itemdetails';
+import { Link, NavLink } from 'react-router-dom';
 
 const dishes = [
   {
@@ -101,12 +102,17 @@ const Restaurants = () => {
   };
   return (
     <>
-   <Itemdetails isVisible={isOverlayVisible} onClose={handleCloseOverlay}/>
-    <div className="max-w-[1300px] mx-auto py-14" onClick={handleOpenOverlay}>
-      <h2 className="text-2xl font-extrabold text-gray-900 mb-6">Top dishes near you</h2>
+   {/* <Itemdetails isVisible={isOverlayVisible} onClose={handleCloseOverlay}/> */}
+   
+    <div className="max-w-[1300px] mx-auto py-14" >
+      <h2 className="text-2xl font-extrabold text-gray-900 mb-6">Top Restaurants</h2>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {dishes.map((dish, index) => (
+            <Link to={"/restaurantitems"}>
+
+           
           <Cards key={index} dish={dish} />
+          </Link>
         ))}
       </div>
     </div>  </>
