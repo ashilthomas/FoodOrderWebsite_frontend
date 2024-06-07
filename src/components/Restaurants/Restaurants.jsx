@@ -91,18 +91,9 @@ const dishes = [
 
 const Restaurants = () => {
 
-    const [isOverlayVisible, setOverlayVisible] = useState(false);
-
-  const handleOpenOverlay = () => {
-    setOverlayVisible(true);
-  };
-
-  const handleCloseOverlay = () => {
-    setOverlayVisible(false);
-  };
   return (
     <>
-   {/* <Itemdetails isVisible={isOverlayVisible} onClose={handleCloseOverlay}/> */}
+   
    
     <div className="max-w-[1300px] mx-auto py-14" >
       <h2 className="text-2xl font-extrabold text-gray-900 mb-6">Top Restaurants</h2>

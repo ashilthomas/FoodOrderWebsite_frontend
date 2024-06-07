@@ -10,6 +10,7 @@ import HomeLayout from './layout/Homelayout/HomeLayout.jsx';
 import MenuItems from './components/MenuItems/MenuItems.jsx';
 import MenuItemspages from './pages/Menuitems/MenuItemspages.jsx';
 import RestaurentItemspage from './pages/RestaurentItemspage/RestaurentItemspage.jsx';
+import Search from './components/Search/Search.jsx';
 const router = createBrowserRouter([
   {
    
@@ -25,7 +26,11 @@ const router = createBrowserRouter([
       },{
         path:"restaurantitems",
         element:<RestaurentItemspage/>
+      },{
+        path:"searchitems",
+        element:<Search/>
       }
+      
     ]
   },
 ]);

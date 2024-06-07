@@ -11,9 +11,10 @@ import {
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { BsCart2 } from "react-icons/bs";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { CiSearch } from "react-icons/ci";
 
-function Header({setIsOverlayVisible}) {
+function Header({setIsOverlayVisible,setOpen}) {
   const navigation = [
     { name: "Home", href: "#", current: false ,route:"/" },
     { name: "About", href: "#", current: false },
@@ -26,7 +27,7 @@ function Header({setIsOverlayVisible}) {
   }
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto shadow-xl">
       <Disclosure as="nav" className="bg-inherit">
         {({ open }) => (
           <>
@@ -74,13 +75,23 @@ function Header({setIsOverlayVisible}) {
                     </div>
                   </div>
                   <div className="flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                    <Link to={"/searchitems"}>
                     <button
+                      type="button"
+                      className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 mx-2"
+                    >
+                      <span className="absolute -inset-1.5" />
+                      <span className="sr-only">View notifications</span>
+                      <CiSearch className="h-6 w-6 " aria-hidden="true" /> 
+                    </button></Link>
+                    <button onClick={()=>setOpen(true)}
                       type="button"
                       className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                     >
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">View notifications</span>
                       <BsCart2 className="h-6 w-6" aria-hidden="true" />
+                      
                     </button>
                     <button onClick={()=>setIsOverlayVisible(true)} className="ml-2 bg-orange-500 text-white py-2 px-8 rounded-full shadow-lg hover:bg-orange-600 transition duration-300">
                       Sign
