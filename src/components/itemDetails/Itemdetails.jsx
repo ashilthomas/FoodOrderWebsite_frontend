@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Itemdetails({ isVisible, onClose, dish }) {
+
   return (
     <>
       {isVisible && (
@@ -29,6 +30,7 @@ function Itemdetails({ isVisible, onClose, dish }) {
                 <button className='className="ml-2 bg-orange-500 text-white py-2 px-8 rounded-full shadow-lg hover:bg-orange-600 transition duration-300"'>Add</button>
               </div>
             </div>
+            <OrderForm/>
           </div>
         </div>
       )}
@@ -37,3 +39,54 @@ function Itemdetails({ isVisible, onClose, dish }) {
 }
 
 export default Itemdetails;
+
+
+const OrderForm = () => {
+    const [selectedSize, setSelectedSize] = useState('M');
+    const [selectedSauce, setSelectedSauce] = useState('Mustard');
+  
+    return (
+      <div className="p-4 max-w-md mx-auto">
+        <div className="mb-4">
+          <h2 className="text-lg font-semibold mb-2">Choose Size</h2>
+          <div className="space-y-2">
+            {['S', 'M', 'L'].map((size, index) => (
+              <label key={size} className="flex items-center">
+                <input
+                  type="radio"
+                  name="size"
+                  value={size}
+                  checked={selectedSize === size}
+                  onChange={() => setSelectedSize(size)}
+                  className="form-radio text-indigo-600"
+                />
+                <span className="ml-2">{`Size ${size}`}</span>
+                <span className="ml-auto">${18 + index * 2}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+  
+        <div>
+          <h2 className="text-lg font-semibold mb-2">Choose Sauce</h2>
+          <div className="space-y-2">
+            {['Chili sauce', 'Mustard', 'Special dipping sauce'].map((sauce, index) => (
+              <label key={sauce} className="flex items-center">
+                <input
+                  type="radio"
+                  name="sauce"
+                  value={sauce}
+                  checked={selectedSauce === sauce}
+                  onChange={() => setSelectedSauce(sauce)}
+                  className="form-radio text-indigo-600"
+                />
+                <span className="ml-2">{sauce}</span>
+                <span className="ml-auto">${18 + index * 2}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+  

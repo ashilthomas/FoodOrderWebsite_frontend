@@ -11,6 +11,7 @@ import MenuItems from './components/MenuItems/MenuItems.jsx';
 import MenuItemspages from './pages/Menuitems/MenuItemspages.jsx';
 import RestaurentItemspage from './pages/RestaurentItemspage/RestaurentItemspage.jsx';
 import Search from './components/Search/Search.jsx';
+import Couponpage from './pages/Couponpage/Couponpage.jsx';
 const router = createBrowserRouter([
   {
    
@@ -21,14 +22,17 @@ const router = createBrowserRouter([
         element:<Home/>
       },
       {
-        path:"fooditems",
+        path:"/fooditems",
         element:<MenuItemspages/>
       },{
-        path:"restaurantitems",
+        path:"/restaurantitems",
         element:<RestaurentItemspage/>
       },{
-        path:"searchitems",
+        path:"/searchitems",
         element:<Search/>
+      },{
+        path:"/coupons",
+        element:<Couponpage/>
       }
       
     ]

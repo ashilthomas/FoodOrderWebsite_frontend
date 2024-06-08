@@ -2,7 +2,6 @@ import React from "react";
 import Cards from "../Cards/Cards";
 import { IoFilter } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
-import { Fragment } from "react";
 import {
   Menu,
   MenuButton,
@@ -63,7 +62,7 @@ function RestaurantMenuItems() {
       <p className="mb-6">
         Taste these delectable classics, delectable biryanis to make your day.
       </p>
-      <div className="flex flex-wrap space-x-4 mb-6 overflow-x-auto">
+      <div className="flex flex-wrap space-x-4 mb-6 ">
         <button className="flex-grow sm:flex-grow-0 px-4 py-2 bg-orange-600 rounded text-white flex gap-2 items-center mb-2">
           <Dropdown />{" "}
           <span>

@@ -6,11 +6,8 @@ import Restaurants from "../../components/Restaurants/Restaurants";
 import Offers from "../../components/Offers/Offers";
 import Appdownloade from "../../components/Appdownload/Appdownloade";
 import Footer from "../../components/Footer/Footer";
-import Loginpopup from "../../components/Register/Loginpopup";
-import MenuItems from "../../components/MenuItems/MenuItems";
-import Search from "../../components/Search/Search";
-import { SiDebian } from "react-icons/si";
-import Slideover from "../../components/Slideover/Slideover";
+import Coupons from "../../components/Coupons/Coupons";
+
 
 function Home() {
    
@@ -25,6 +22,7 @@ function Home() {
       <Offers />
       <Appdownloade />
       <Footer />
+     
      
      
     </div>
