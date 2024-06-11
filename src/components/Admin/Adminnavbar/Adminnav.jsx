@@ -14,7 +14,7 @@ import { BsCart2 } from "react-icons/bs";
 import { Link, NavLink } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 
-function Header({setIsOverlayVisible,setOpen}) {
+function Adminnave({setIsOverlayVisible,setOpen}) {
   const navigation = [
     { name: "Home", href: "#", current: false ,route:"/" },
     { name: "About", href: "#", current: false },
@@ -75,27 +75,9 @@ function Header({setIsOverlayVisible,setOpen}) {
                     </div>
                   </div>
                   <div className="flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <Link to={"/searchitems"}>
-                    <button
-                      type="button"
-                      className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 mx-2"
-                    >
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">View notifications</span>
-                      <CiSearch className="h-6 w-6 " aria-hidden="true" /> 
-                    </button></Link>
-                    <button onClick={()=>setOpen(true)}
-                      type="button"
-                      className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    >
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">View notifications</span>
-                      <BsCart2 className="h-6 w-6" aria-hidden="true" />
-                      
-                    </button>
-                    <button onClick={()=>setIsOverlayVisible(true)} className="ml-2 bg-orange-500 text-white py-2 px-8 rounded-full shadow-lg hover:bg-orange-600 transition duration-300">
-                      Sign
-                    </button>
+                   
+                  
+                 
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
@@ -121,6 +103,7 @@ function Header({setIsOverlayVisible,setOpen}) {
                         <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                           <MenuItem>
                             {({ active }) => (
+                                <Link to={"/admin"}>
                               <a
                                 href="#"
                                 className={classNames(
@@ -128,12 +111,16 @@ function Header({setIsOverlayVisible,setOpen}) {
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Your Profile
+                               Addmenuitem
                               </a>
+                              </Link>
                             )}
                           </MenuItem>
                           <MenuItem>
                             {({ active }) => (
+                                <Link to={"/addrestaurant"}>
+
+                               
                               <a
                                 href="#"
                                 className={classNames(
@@ -141,8 +128,9 @@ function Header({setIsOverlayVisible,setOpen}) {
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Settings
+                               Addrestaurant
                               </a>
+                              </Link>
                             )}
                           </MenuItem>
                           <MenuItem>
@@ -160,7 +148,7 @@ function Header({setIsOverlayVisible,setOpen}) {
                           </MenuItem>
                           <MenuItem>
                             {({ active }) => (
-                                <Link to={"/admin"}>
+                                <Link to={"/adminorders"}>
                               <a
                                 href="#"
                                 className={classNames(
@@ -168,7 +156,7 @@ function Header({setIsOverlayVisible,setOpen}) {
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                               Admin
+                              Orders
                               </a>
                               </Link>
                             )}
@@ -208,4 +196,4 @@ function Header({setIsOverlayVisible,setOpen}) {
   );
 }
 
-export default Header;
+export default Adminnave;

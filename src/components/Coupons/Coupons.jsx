@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const coupons = [
   { id: 1, title: "Google Pay", description: "Get cashback between $5 to $10 using Gpay", code: "#GOOGLE10", minOrder: 10 },
@@ -11,21 +11,36 @@ const coupons = [
   { id: 8, title: "Mastercard", description: "Get cashback between $25 to $50 using Mastercard", code: "#MASTERCARD80", minOrder: 50 },
 ];
 
-const CouponCard = ({ title, description, code, minOrder }) => (
-  <div className="border rounded-lg p-4 m-2 shadow-lg flex flex-col items-center justify-between">
-    <h2 className="font-bold text-lg mb-2">{title}</h2>
-    <p className="text-gray-600 text-center">{description}</p>
-    <p className="text-gray-400 text-sm mb-2">Valid on order with items worth ${minOrder} or more.</p>
-<div className='flex items-center gap-5 '>
-        <p className='border px-4 py-2 mt-2'>{code}</p>
-    <button className="bg-orange-500 text-white px-4 py-2 rounded mt-2" onClick={() => navigator.clipboard.writeText(code)}>
-      Copy Code
-    </button>
-    
-</div>
+const CouponCard = ({ title, description, code, minOrder }) => {
+  const [buttonText, setButtonText] = useState('Copy Code');
 
-  </div>
-);
+  const handleCopyClick = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setButtonText('Copied!');
+      setTimeout(() => setButtonText('Copy Code'), 2000); // Reset text after 2 seconds
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
+
+  return (
+    <div className="border rounded-lg p-4 m-2 shadow-lg flex flex-col items-center justify-between">
+      <h2 className="font-bold text-lg mb-2">{title}</h2>
+      <p className="text-gray-600 text-center">{description}</p>
+      <p className="text-gray-400 text-sm mb-2">Valid on order with items worth ${minOrder} or more.</p>
+      <div className='flex items-center gap-5'>
+        <p className='border px-4 py-2 mt-2'>{code}</p>
+        <button
+          className="bg-orange-500 text-white px-4 py-2 rounded mt-2"
+          onClick={handleCopyClick}
+        >
+          {buttonText}
+        </button>
+      </div>
+    </div>
+  );
+};
 
 const Coupons = () => (
   <div className="p-6 max-w-[1300px] mx-auto">
