@@ -1,25 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
   Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
   Transition,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { BsCart2 } from "react-icons/bs";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 
-function Header({setIsOverlayVisible,setOpen}) {
+function Header({ setOpen }) {
+  const [menu, setMenu] = useState("menu");
+
+  const handleMenu = (item) => {
+    setMenu(item);
+  };
+
   const navigation = [
-    { name: "Home", href: "#", current: false ,route:"/" },
-    { name: "About", href: "#", current: false },
-    { name: "Menu", href: "#", current: false },
-    { name: "Contact", href: "#", current: false },
+    { name: "Home", href: "#", route: "/" },
+    { name: "About", href: "#restaurants" },
+    { name: "Menu", href: "#" },
+    { name: "Contact", href: "#", route: "/contact" },
   ];
 
   function classNames(...classes) {
@@ -35,7 +36,7 @@ function Header({setIsOverlayVisible,setOpen}) {
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   {/* Mobile menu button */}
-                  <DisclosureButton className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
                     {open ? (
@@ -43,10 +44,10 @@ function Header({setIsOverlayVisible,setOpen}) {
                     ) : (
                       <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                     )}
-                  </DisclosureButton>
+                  </Disclosure.Button>
                 </div>
                 <div className="flex flex-1 items-center justify-between">
-                  <div className="flex items-center ">
+                  <div className="flex items-center">
                     <img
                       className="h-16 w-auto"
                       src="https://graphicsfamily.com/wp-content/uploads/edd/2021/06/Editable-Photoshop-Food-Logo-Design-PNG-Transparent.png"
@@ -56,51 +57,52 @@ function Header({setIsOverlayVisible,setOpen}) {
                   <div className="hidden sm:block">
                     <div className="flex space-x-4 justify-center">
                       {navigation.map((item) => (
-                        <NavLink to={item.route}>
-                        <a
+                        <Link
+                          to={item.route}
                           key={item.name}
-                          href={item.href}
+                          onClick={() => handleMenu(item.name)}
                           className={classNames(
-                            item.current
-                              ? "text-white"
+                            item.name === menu
+                              ? "text-white bg-orange-500"
                               : "text-stone-900 hover:bg-orange-500 hover:text-white",
                             "rounded-md px-3 py-2 text-sm font-medium"
                           )}
-                          aria-current={item.current ? "page" : undefined}
+                          aria-current={item.menu ? "page" : undefined}
                         >
                           {item.name}
-                        </a>
-                        </NavLink>
+                        </Link>
                       ))}
                     </div>
                   </div>
                   <div className="flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <Link to={"/searchitems"}>
-                    <button
-                      type="button"
-                      className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 mx-2"
-                    >
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">View notifications</span>
-                      <CiSearch className="h-6 w-6 " aria-hidden="true" /> 
-                    </button></Link>
-                    <button onClick={()=>setOpen(true)}
+                      <button
+                        type="button"
+                        className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 mx-2"
+                      >
+                        <span className="absolute -inset-1.5" />
+                        <span className="sr-only">Search</span>
+                        <CiSearch className="h-6 w-6 " aria-hidden="true" />
+                      </button>
+                    </Link>
+                    <button onClick={() => setOpen(true)}
                       type="button"
                       className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                     >
                       <span className="absolute -inset-1.5" />
-                      <span className="sr-only">View notifications</span>
+                      <span className="sr-only">Cart</span>
                       <BsCart2 className="h-6 w-6" aria-hidden="true" />
-                      
                     </button>
-                    <button onClick={()=>setIsOverlayVisible(true)} className="ml-2 bg-orange-500 text-white py-2 px-8 rounded-full shadow-lg hover:bg-orange-600 transition duration-300">
+                    <Link to={"/signup"}>
+                    <button  className="ml-2 bg-orange-500 text-white py-2 px-8 rounded-full shadow-lg hover:bg-orange-600 transition duration-300">
                       Sign
                     </button>
+                    </Link>
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
                       <div>
-                        <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                           <span className="absolute -inset-1.5" />
                           <span className="sr-only">Open user menu</span>
                           <img
@@ -108,7 +110,7 @@ function Header({setIsOverlayVisible,setOpen}) {
                             src="https://www.pngall.com/wp-content/uploads/5/Profile.png"
                             alt=""
                           />
-                        </MenuButton>
+                        </Menu.Button>
                       </div>
                       <Transition
                         enter="transition ease-out duration-100"
@@ -118,8 +120,8 @@ function Header({setIsOverlayVisible,setOpen}) {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          <MenuItem>
+                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <Menu.Item>
                             {({ active }) => (
                               <a
                                 href="#"
@@ -131,8 +133,8 @@ function Header({setIsOverlayVisible,setOpen}) {
                                 Your Profile
                               </a>
                             )}
-                          </MenuItem>
-                          <MenuItem>
+                          </Menu.Item>
+                          <Menu.Item>
                             {({ active }) => (
                               <a
                                 href="#"
@@ -144,8 +146,8 @@ function Header({setIsOverlayVisible,setOpen}) {
                                 Settings
                               </a>
                             )}
-                          </MenuItem>
-                          <MenuItem>
+                          </Menu.Item>
+                          <Menu.Item>
                             {({ active }) => (
                               <a
                                 href="#"
@@ -157,23 +159,22 @@ function Header({setIsOverlayVisible,setOpen}) {
                                 Sign out
                               </a>
                             )}
-                          </MenuItem>
-                          <MenuItem>
+                          </Menu.Item>
+                          <Menu.Item>
                             {({ active }) => (
-                                <Link to={"/admin"}>
-                              <a
-                                href="#"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                               Admin
-                              </a>
+                              <Link to={"/admin"}>
+                                <span
+                                  className={classNames(
+                                    active ? "bg-gray-100" : "",
+                                    "block px-4 py-2 text-sm text-gray-700"
+                                  )}
+                                >
+                                  Admin
+                                </span>
                               </Link>
                             )}
-                          </MenuItem>
-                        </MenuItems>
+                          </Menu.Item>
+                        </Menu.Items>
                       </Transition>
                     </Menu>
                   </div>
@@ -181,26 +182,27 @@ function Header({setIsOverlayVisible,setOpen}) {
               </div>
             </div>
 
-            <DisclosurePanel className="sm:hidden">
+            <Disclosure.Panel className="sm:hidden">
               <div className="space-y-1 px-2 pb-3 pt-2">
                 {navigation.map((item) => (
-                  <DisclosureButton
+                  <Disclosure.Button
                     key={item.name}
-                    as="a"
-                    href={item.href}
+                    as={Link}
+                    to={item.route}
+                    onClick={() => handleMenu(item.name)}
                     className={classNames(
-                      item.current
+                      item.name === menu
                         ? "bg-gray-900 text-white"
                         : "text-gray-300 hover:bg-gray-700 hover:text-white",
                       "block rounded-md px-3 py-2 text-base font-medium"
                     )}
-                    aria-current={item.current ? "page" : undefined}
+                    aria-current={item.name === menu ? "page" : undefined}
                   >
                     {item.name}
-                  </DisclosureButton>
+                  </Disclosure.Button>
                 ))}
               </div>
-            </DisclosurePanel>
+            </Disclosure.Panel>
           </>
         )}
       </Disclosure>

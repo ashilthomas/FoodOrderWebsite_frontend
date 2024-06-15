@@ -57,13 +57,13 @@ const restaurants = [
 
 function RestaurantMenuItems() {
   return (
-    <div className="max-w-[1300px] mx-auto py-14">
+    <div className="max-w-[1300px] mx-auto py-14 padding">
       <h1 className="text-3xl font-bold mb-4">Biryani</h1>
       <p className="mb-6">
         Taste these delectable classics, delectable biryanis to make your day.
       </p>
       <div className="flex flex-wrap space-x-4 mb-6 ">
-        <button className="flex-grow sm:flex-grow-0 px-4 py-2 bg-orange-600 rounded text-white flex gap-2 items-center mb-2">
+        <button className="flex-grow sm:flex-grow-0  bg-orange-600 rounded text-white flex gap-2 items-center mb-2">
           <Dropdown />{" "}
           <span>
             <IoFilter />
@@ -102,8 +102,8 @@ const Dropdown = () => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-inherit px-3   text-white">
-          Filter
+        <MenuButton className="inline-flex w-full justify-center  rounded-md bg-inherit    text-white">
+          filter
         </MenuButton>
       </div>
 

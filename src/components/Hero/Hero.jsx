@@ -12,7 +12,7 @@ function Hero() {
       
 
        
-      <div className="max-w-[1300px] mx-auto px-5  flex flex-col justify-center  h-full">
+      <div className="max-w-[1300px] mx-auto px-5  flex flex-col justify-center  h-full padding">
         <h2 className="md:text-5xl text-2xl sm:w-1/2  font-bold text-neutral-50 ">
           Order your favourite food here
         </h2>

@@ -34,8 +34,8 @@ const MenuItem = ({ title, description, price, rating, image }) => {
 
 const RestaurentItems = () => {
   return (
-    <div className="max-w-[1300px] mx-auto py-14">
-      <div className="text-center mb-8  bg-fixed py-20 bg-[url('')] bg-cover bg-center myr">
+    <div className="">
+      <div className="text-center mb-8  bg-fixed py-20 bg-[url('')] bg-cover bg-center restaurant-bg">
       
         <h1 className="text-3xl font-bold text-white">Fiesta Mexico : Authentic Mexican Food</h1>
         <div className="text-gray-500">Ontario, Canada</div>

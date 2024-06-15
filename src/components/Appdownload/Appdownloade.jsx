@@ -3,7 +3,7 @@ import React from "react";
 function Appdownloade() {
   return (
     <div className=" mt-10 px-4 bg-orange-500">
-        <div className="max-w-[1300px] mx-auto py-14">
+        <div className="max-w-[1300px] mx-auto py-14 padding">
 
        
       <div className="flex flex-col md:flex-row   max-w-[900px] mx-auto  ">

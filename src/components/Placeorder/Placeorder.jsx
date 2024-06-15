@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Placeorder = () => {
+
+
+    const [count, setCount] = useState(1);
+
+    const increment = () => setCount(count + 1);
+    const decrement = () => setCount(count > 1 ? count - 1 : 1);
     return (
         <div className="max-w-[900px] mx-auto py-14 flex flex-col md:flex-row">
             {/* Address Selection Section */}
@@ -86,6 +92,22 @@ const Placeorder = () => {
                     <div className="flex justify-between border-b pb-2">
                         <span>Ultimate Loaded Nacho Fiesta</span>
                         <span>$20</span>
+                        <div className="flex items-center justify-center space-x-4 bg-orange-600 text-white rounded-lg ">
+                  <button
+                    onClick={decrement}
+                    className="bg-orange-700 hover:bg-orange-800 px-3 py-2 rounded-lg"
+                  >
+                    -
+                  </button>
+                  <span className="text-lg">{count}</span>
+                  <button
+                    onClick={increment}
+                    className="bg-orange-700 hover:bg-orange-800 px-3 py-2 rounded-lg"
+                  >
+                    +
+                  </button>
+                </div>
+
                     </div>
                     <div className="flex justify-between border-b py-2">
                         <span>Smoked Salmon Bagel</span>
@@ -107,10 +129,12 @@ const Placeorder = () => {
                         <span>Discount (10%)</span>
                         <span>-$10</span>
                     </div>
-                  <form action="" className='flex items-center justify-center mt-3'>
-                    <input placeholder='coupon' className=' block w-52 p-1.5 border   shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50' type="text" />
-                    <button className='w-full p-1.5 bg-orange-500 text-white '>Click</button>
-                  </form>
+                    <div>
+  	<form class="m-4 flex">
+    	<input class="rounded-l-lg p-4 border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white" placeholder="your@mail.com"/>
+		<button class="px-8 rounded-r-lg bg-yellow-400  text-gray-800 font-bold p-4 uppercase border-yellow-500 border-t border-b border-r">Subscribe</button>
+	</form>
+</div>
                     <div className="flex justify-between mt-4 font-semibold ">
                         <span>To Pay</span>
                         <span>$100</span>

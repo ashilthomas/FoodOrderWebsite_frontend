@@ -32,7 +32,7 @@ const deals = [
 
 const Offers = () => {
   return (
-    <div className="max-w-[1300px] mx-auto">
+    <div className="max-w-[1300px] mx-auto padding">
       <h2 className="text-2xl font-bold">Today's Deal</h2>
       <p className="mb-8 text-gray-600">Take a benefit from our latest offers.</p>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">

@@ -11,7 +11,18 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
-.myr{
+.restaurant-bg{
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("https://images.pexels.com/photos/8963961/pexels-photo-8963961.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
 
+}
+.sign-bg{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("https://images.pexels.com/photos/8963961/pexels-photo-8963961.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.padding{
+  padding-left: 10px;
+  padding-right: 10px;
 }

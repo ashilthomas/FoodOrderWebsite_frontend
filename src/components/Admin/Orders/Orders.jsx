@@ -3,7 +3,7 @@ import React from 'react';
 
 function Orders() {
   return (
-    <div className='max-w-[1300px] mx-auto py-14'>
+    <div className='max-w-[1300px] mx-auto py-14 padding'>
       <Card
         direction={{ base: 'column', sm: 'row' }}
         overflow='hidden'

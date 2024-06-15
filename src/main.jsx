@@ -14,8 +14,21 @@ import Addrestaurant from "./components/Admin/Addrestaurant/Addrestaurant.jsx";
 import Placeorderpage from "./pages/Placeorderpage/Placeorderpage.jsx";
 import Orders from "./components/Admin/Orders/Orders.jsx";
 import { ChakraProvider } from "@chakra-ui/react";
+import Error from "./components/Error/Error.jsx";
+import Contactpage from "./pages/Contactpage/Contactpage.jsx";
+import Signup from "./components/Sign/Signup/Signup.jsx";
+import Signin from "./components/Sign/Signin/Signin.jsx";
+
 const router = createBrowserRouter([
   {
+    path: "/signin",
+    element: <Signin />,
+  },{
+    path:"/signup",
+    element:<Signup/>
+  },
+  {
+   
     element: <HomeLayout />,
     children: [
       {
@@ -41,7 +54,13 @@ const router = createBrowserRouter([
       {
         path: "/placeorder",
         element: <Placeorderpage />,
-      },
+      },{
+        path:"*",
+        element:<Error/>
+      },{
+        path:"/contact",
+        element:<Contactpage/>
+      }
     ],
   },
   {

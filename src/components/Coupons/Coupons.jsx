@@ -43,7 +43,7 @@ const CouponCard = ({ title, description, code, minOrder }) => {
 };
 
 const Coupons = () => (
-  <div className="p-6 max-w-[1300px] mx-auto">
+  <div className="p-6 max-w-[1300px] mx-auto padding">
     <h1 className="text-2xl font-bold mb-4">Available Coupons</h1>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {coupons.map(coupon => (
