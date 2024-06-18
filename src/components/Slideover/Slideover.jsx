@@ -6,24 +6,23 @@ import { Link } from 'react-router-dom'
 const products = [
   {
     id: 1,
-    name: 'Throwback Hip Bag',
+    name: 'Wing Master',
     href: '#',
     color: 'Salmon',
     price: '$90.00',
     quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt: 'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
+    imageSrc: 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=600',
+   
   },
   {
     id: 2,
-    name: 'Medium Stuff Satchel',
+    name: 'Wing Master',
     href: '#',
     color: 'Blue',
     price: '$32.00',
     quantity: 1,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
+    imageSrc: 'https://images.pexels.com/photos/2097090/pexels-photo-2097090.jpeg?auto=compress&cs=tinysrgb&w=600',
+  
   },
   // More products...
 ]
@@ -60,7 +59,7 @@ export default function Slideover({open,setOpen}) {
                   <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
                     <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
                       <div className="flex items-start justify-between">
-                        <DialogTitle className="text-lg font-medium text-gray-900">Shopping cart</DialogTitle>
+                        <DialogTitle className="text-lg font-medium text-gray-900">order cart</DialogTitle>
                         <div className="ml-3 flex h-7 items-center">
                           <button
                             type="button"
@@ -140,7 +139,7 @@ export default function Slideover({open,setOpen}) {
                             className="font-medium text-orange-600 hover:text-orange-500"
                             onClick={() => setOpen(false)}
                           >
-                            Continue Shopping
+                            Continue ordering
                             <span aria-hidden="true"> &rarr;</span>
                           </button>
                         </p>

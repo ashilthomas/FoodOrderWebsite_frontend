@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Cards from '../Cards/Cards';
 
 import { Link } from 'react-router-dom';
-
-
-import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux'
+import { fetchMenusStart,fetchMenusSuccess,fetchMenusFailure } from '../../Redux/items'
+import axios from 'axios';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -97,6 +97,23 @@ const dishes = [
 //   };
 
 const Restaurants = () => {
+  const { loading, data, error } = useSelector((state) => state.menusData);
+  const dispatch = useDispatch()
+
+
+
+  useEffect(()=>{
+
+    const fetchMenuItems = async()=>{
+      dispatch(fetchMenusStart())
+      const responce = await axios.get("http://localhost:3000/api/v1/menus/allfoods")
+      dispatch( fetchMenusSuccess(responce.data.allMenus))
+     
+      dispatch(fetchMenusFailure())
+     
+     }
+     fetchMenuItems()
+  },[])
 
   return (
     <>
@@ -106,7 +123,7 @@ const Restaurants = () => {
       <h2 className="text-2xl font-extrabold text-gray-900 mb-6">Top Restaurants</h2>
       <div className="flex space-x-2 mb-7 overflow-x-auto whitespace-nowrap">
     <button className="border rounded-full px-4 py-1 sm:px-4 sm:py-1 hover:bg-orange-500 hover:text-white">
-        <Dropdowns />
+       
     </button>
     <button className="border rounded-full px-4 py-1 hover:bg-orange-500 hover:text-white">
         Sort By <span>&#9660;</span>
@@ -138,84 +155,3 @@ const Restaurants = () => {
 };
 
 export default Restaurants;
-
-const Dropdowns = ()=>{
-  return (
-  <Menu as="div" className="relative inline-block text-left">
-  <div>
-    <MenuButton className="inline-flex w-full justify-center gap-x-1.5  px-4 py-1 hover:bg-orange-500 hover:text-white">
-    Filter
-      <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-400" aria-hidden="true" />
-    </MenuButton>
-  </div>
-
-  <Transition
-    enter="transition ease-out duration-100"
-    enterFrom="transform opacity-0 scale-95"
-    enterTo="transform opacity-100 scale-100"
-    leave="transition ease-in duration-75"
-    leaveFrom="transform opacity-100 scale-100"
-    leaveTo="transform opacity-0 scale-95"
-  >
-    <MenuItems className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-      <div className="py-1">
-        <MenuItem>
-          {({ focus }) => (
-            <a
-              href="#"
-              className={classNames(
-                focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                'block px-4 py-2 text-sm'
-              )}
-            >
-              Account settings
-            </a>
-          )}
-        </MenuItem>
-        <MenuItem>
-          {({ focus }) => (
-            <a
-              href="#"
-              className={classNames(
-                focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                'block px-4 py-2 text-sm'
-              )}
-            >
-              Support
-            </a>
-          )}
-        </MenuItem>
-        <MenuItem>
-          {({ focus }) => (
-            <a
-              href="#"
-              className={classNames(
-                focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                'block px-4 py-2 text-sm'
-              )}
-            >
-              License
-            </a>
-          )}
-        </MenuItem>
-        <form method="POST" action="#">
-          <MenuItem>
-            {({ focus }) => (
-              <button
-                type="submit"
-                className={classNames(
-                  focus ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                  'block w-full px-4 py-2 text-left text-sm'
-                )}
-              >
-                Sign out
-              </button>
-            )}
-          </MenuItem>
-        </form>
-      </div>
-    </MenuItems>
-  </Transition>
-</Menu>
-  )
-}

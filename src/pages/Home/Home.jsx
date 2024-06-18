@@ -5,6 +5,7 @@ import Restaurants from "../../components/Restaurants/Restaurants";
 import Offers from "../../components/Offers/Offers";
 import Appdownloade from "../../components/Appdownload/Appdownloade";
 import Footer from "../../components/Footer/Footer";
+import App from "../../App";
 
 
 
@@ -17,6 +18,7 @@ function Home() {
       <Offers />
       <Appdownloade />
       <Footer />
+   
      
     </div>
   );

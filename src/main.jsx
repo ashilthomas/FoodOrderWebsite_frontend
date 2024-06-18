@@ -18,6 +18,8 @@ import Error from "./components/Error/Error.jsx";
 import Contactpage from "./pages/Contactpage/Contactpage.jsx";
 import Signup from "./components/Sign/Signup/Signup.jsx";
 import Signin from "./components/Sign/Signin/Signin.jsx";
+import { Provider } from 'react-redux';
+import { store } from "./Redux/store.js";
 
 const router = createBrowserRouter([
   {
@@ -84,7 +86,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider>
+    <Provider store={store}>
       <RouterProvider router={router} />
+      </Provider>
     </ChakraProvider>
   </React.StrictMode>
 );
