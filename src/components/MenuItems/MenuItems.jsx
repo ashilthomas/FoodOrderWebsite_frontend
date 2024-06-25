@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Cards from "../Cards/Cards";
 import { IoFilter } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
@@ -9,53 +9,49 @@ import {
   MenuItems as HeadlessMenuItems,
   Transition,
 } from "@headlessui/react";
+import { useParams } from "react-router-dom";
+import instance from "../Axios";
+import items from "../../Redux/items";
+import CardSkeleton from "../Skeletons/CardSkeleton";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const restaurants = [
-  {
-    name: "Hotel Soft",
-    rating: 4.3,
-    time: "20-25 mins",
-    cuisine: "Biryani, Chinese",
-    location: "Fort Road",
-    image:
-      "https://images.pexels.com/photos/3026013/pexels-photo-3026013.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-  },
-  {
-    name: "New City Light Restaurant",
-    rating: 3.9,
-    time: "25-30 mins",
-    cuisine: "Snacks, Biryani",
-    location: "Kannur",
-    image:
-      "https://images.pexels.com/photos/3026013/pexels-photo-3026013.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-    discount: "20% OFF UPTO ₹120",
-  },
-  {
-    name: "Ajwa Restaurant",
-    rating: 4.3,
-    time: "20-25 mins",
-    cuisine: "Biryani, Chinese",
-    location: "Thana",
-    image:
-      "https://images.pexels.com/photos/3026013/pexels-photo-3026013.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-    discount: "20% OFF UPTO ₹50",
-  },
-  {
-    name: "Volga Chef Restaurant",
-    rating: 4,
-    time: "25-30 mins",
-    cuisine: "Biryani, Chinese, Kerala",
-    location: "Thavakkara",
-    image:
-      "https://images.pexels.com/photos/3026013/pexels-photo-3026013.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-  },
-];
-
 function RestaurantMenuItems() {
+  const [restaurantsCategory, setRestaurantsCategory] = useState([]);
+  const [noItem,setNoitem]=useState('')
+  const [categoriesLoading,setCategoriesLoding]=useState(false)
+  const category = useParams();
+
+
+
+  useEffect(() => {
+ 
+    const fetchCategoryItems = async () => {
+      try {
+        setCategoriesLoding(true)
+        const res = await instance.post("menus/categoryitems",{ category: category.items });
+        setCategoriesLoding(false)
+       
+        if(res.data.success){
+          setRestaurantsCategory(res.data.items);
+         
+         
+        }else{
+          setNoitem(res.data.message)
+        }
+         
+        
+      } catch (error) {
+        console.error('Error fetching category items:', error);
+      }
+    };
+// fetchCategoryItems()
+    setTimeout(fetchCategoryItems, 5000); 
+  
+  }, [category]);
+
   return (
     <div className="max-w-[1300px] mx-auto py-14 padding">
       <h1 className="text-3xl font-bold mb-4">Biryani</h1>
@@ -88,15 +84,24 @@ function RestaurantMenuItems() {
 
       <h2 className="text-2xl font-semibold mb-4">Restaurants to explore</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {restaurants.map((restaurant) => (
-          <Cards key={restaurant.name} dish={restaurant} />
-        ))}
+      {categoriesLoading ? (
+          <>
+            <CardSkeleton />
+            <CardSkeleton />
+            <CardSkeleton />
+            <CardSkeleton />
+          </>
+        ) : (
+          restaurantsCategory?.map((restaurant) => (
+            <Cards key={restaurant.name} dish={restaurant} />
+          ))
+        )}
       </div>
+      <p className="text-center"> {noItem}</p>
+     
     </div>
   );
 }
-
-export default RestaurantMenuItems;
 
 const Dropdown = () => {
   return (
@@ -162,3 +167,5 @@ const Dropdown = () => {
     </Menu>
   );
 };
+
+export default RestaurantMenuItems;

@@ -29,3 +29,26 @@
 html {
   scroll-behavior: smooth;
 } 
+
+.mtext {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+          line-clamp: 2; 
+  -webkit-box-orient: vertical;
+}
+
+/*side bar*/
+@media screen and (max-width: 600px) {
+ .sidebarnone{
+  display: none;
+  
+ }
+ .sidebaropen{
+  display: block;
+ }
+}
+
+.sidebaropen{
+  display: none;
+ }

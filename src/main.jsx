@@ -20,6 +20,7 @@ import Signup from "./components/Sign/Signup/Signup.jsx";
 import Signin from "./components/Sign/Signin/Signin.jsx";
 import { Provider } from 'react-redux';
 import { store } from "./Redux/store.js";
+import AddCustomization from "./components/Admin/AddCustomization/AddCustomization.jsx";
 
 const router = createBrowserRouter([
   {
@@ -38,11 +39,11 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/fooditems",
+        path: "/fooditems/:items",
         element: <MenuItemspages />,
       },
       {
-        path: "/restaurantitems",
+        path: "/restaurantitems/:id",
         element: <RestaurentItemspage />,
       },
       {
@@ -79,16 +80,21 @@ const router = createBrowserRouter([
       {
         path: "/adminorders",
         element: <Orders />,
-      },
+      },{
+        path:"/addcustomization",
+        element:<AddCustomization/>
+      }
     ],
   },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ChakraProvider>
+   
     <Provider store={store}>
+    <ChakraProvider>
       <RouterProvider router={router} />
+      </ChakraProvider>
       </Provider>
-    </ChakraProvider>
+  
   </React.StrictMode>
 );

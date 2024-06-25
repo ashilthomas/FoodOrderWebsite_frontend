@@ -45,7 +45,7 @@ const AddRestaurant = () => {
       formData.append('rating', data.rating);
       formData.append('openinghours', data.openinghours);
       formData.append('location', data.location);
-      formData.append('restaurantimg', data.restaurantimg[0]); // assuming restaurantimg is the file input name
+      formData.append('restaurantimg', data.restaurantimg[0]); 
 
       const response = await axios.post('http://localhost:3000/api/v1/restaurent/addrestaurant', formData, {
         headers: {
@@ -72,16 +72,17 @@ const AddRestaurant = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto mt-10 p-5">
+    <div className=" mt-10 p-5 w-full">
       <ToastContainer />
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-5 rounded-lg shadow-md">
+      <div className="flex gap-3">
+        <div className="bg-white p-5 rounded-lg shadow-md w-full ">
           <h2 className="text-2xl font-bold mb-5">Create Restaurant</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="col-span-full">
               <label htmlFor="restaurantimg" className="block text-sm font-medium leading-6 text-gray-900">
                 Cover photo
               </label>
+            
               <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
             
                 <div className="text-center">
@@ -176,7 +177,7 @@ const AddRestaurant = () => {
           </form>
         </div>
 
-        <div className='overflow-auto h-screen'>
+        <div className='overflow-auto h-screen w-full'>
           <h2 className="text-2xl font-bold mb-5">Restaurants</h2>
           <ul className="space-y-4">
             {restaurants && restaurants.map((items, i) => (

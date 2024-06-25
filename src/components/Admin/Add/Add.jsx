@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import instance from "../../Axios";
 import { useToast } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import CardSkeleton from "../../Skeletons/CardSkeleton";
+
+
 
 const schema = yup.object().shape({
   title: yup.string().required("Title is required"),
@@ -15,15 +19,17 @@ const schema = yup.object().shape({
   image: yup.mixed().required("Image is required"),
   brand: yup.string().required("Brand is required"),
   restaurant: yup.string().required("Restaurant is required"),
-  // customization: yup.string().required("Customization is required"),
+  customization: yup.string().required("Customization is required"),
 });
 
 const Add = () => {
-  const toast = useToast()
+  const toast = useToast();
   const [categories, setCategories] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
-  
+  const [customization,setustomization]=useState([])
+ 
+
   const {
     register,
     handleSubmit,
@@ -32,20 +38,29 @@ const Add = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  
-  
+
+ 
+
+
+
   
   useEffect(() => {
+    
     const fetchOptions = async () => {
       try {
         const restaurant = await instance.get("restaurent/allrestaurant");
         setRestaurants(restaurant.data);
-        setCategories(["Appetizer", "Main Course", "Dessert"]);
+        setCategories(['Pizza', 'Biriyani', "Dessert","salad","Rolls",'Sandwich','Cake','Pure Veg','Pasta','Noodles','Burger']);
   
         const menuRes = await axios.get(
           "http://localhost:3000/api/v1/menus/allfoods"
         );
         setMenuItems(menuRes.data.allMenus); // Corrected line: access the data property
+
+        const allCustomization = await instance.get("foodcoustom")
+        setustomization(allCustomization.data.foodCustomization)
+
+
       } catch (error) {
         console.error("Error fetching options:", error);
       }
@@ -54,39 +69,53 @@ const Add = () => {
     fetchOptions();
   }, []);
 
+  
+
   const onSubmit = async (data) => {
+    console.log(data);
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('price', data.price);
+    formData.append('category', data.category);
+    formData.append('availability', data.availability ? "true" : "false");
+    formData.append('brand', data.brand);
+    formData.append('restaurant', data.restaurant);
+    formData.append('customization', data.customization);
+    formData.append('image', data.image[0]); 
+
     try {
       const response = await axios.post(
         "http://localhost:3000/api/v1/menus/addfood",
-        data
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
-      console.log(response.data);
-      if(response.data.success){
+
+      if (response.data.success) {
         toast({
           title: response.data.message,
           status: 'success',
           duration: 9000,
           isClosable: true,
-        })
-      }else{
+        });
+      } else {
         toast({
           title: response.data.message,
           status: 'error',
           duration: 9000,
           isClosable: true,
-        })
+        });
       }
      
       reset(); 
     } catch (error) {
       console.error("There was an error creating the menu item:", error);
       toast({
-        title:response.data.message,
-    
+        title: "There was an error creating the menu item.",
         status: 'error',
         duration: 9000,
         isClosable: true,
-      })
+      });
     }
   };
 
@@ -99,10 +128,17 @@ const Add = () => {
     }
   };
 
+
   return (
-    <div className="max-w-7xl mx-auto mt-10 p-5">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-5 rounded-lg shadow-md">
+<>
+
+{/* max-w-7xl */}
+    <div className=" mx-auto mt-10 p-5  ml-10 ">
+
+    {/* className="grid grid-cols-1 md:grid-cols-2 gap-6" */}
+      <div className="sm:flex sm:gap-3 " >
+     
+        <div className="bg-white p-5 rounded-lg drop-shadow-lg w-auto ">
           <h2 className="text-2xl font-bold mb-5">Create Menu Item</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
@@ -167,7 +203,7 @@ const Add = () => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Image URL
+                Image
               </label>
               <input
                 type="file"
@@ -206,7 +242,7 @@ const Add = () => {
                 >
                   <option value="">Select Restaurant</option>
                   {restaurants.map((restaurant) => (
-                    <option key={restaurant.id} value={restaurant.id}>
+                    <option key={restaurant.id} value={restaurant._id}>
                       {restaurant.title}
                     </option>
                   ))}
@@ -216,7 +252,7 @@ const Add = () => {
                 </p>
               </div>
               <div>
-                {/* <label className="block text-sm font-medium text-gray-700">
+                <label className="block text-sm font-medium text-gray-700">
                   Customization
                 </label>
                 <select
@@ -224,12 +260,13 @@ const Add = () => {
                   className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
                 >
                   <option value="">Select Customization</option>
-                  {customizations.map((customization) => (
-                    <option key={customization.id} value={customization.id}>
-                      {customization.name}
+                  {customization.map((customization) => (
+                    <option  key={customization._id} value={customization._id}>
+                      customizationSize
+                    
                     </option>
                   ))}
-                </select> */}
+                </select>
                 <p className="text-red-600 text-sm">
                   {errors.customization?.message}
                 </p>
@@ -244,10 +281,14 @@ const Add = () => {
           </form>
         </div>
 
-        <div className="h-screen overflow-auto">
+        <div className="h-screen overflow-auto w-full sm:w-96">
           <h2 className="text-2xl font-bold mb-5">Menu Items</h2>
           <ul className="space-y-4">
-            {menuItems.map((item) => (
+        
+        
+            { menuItems && menuItems.map((item) => (
+
+             
               <li
                 key={item._id}
                 className="p-4 border rounded-md shadow-sm flex justify-between items-center"
@@ -258,12 +299,11 @@ const Add = () => {
                     <h3 className="text-xl font-semibold">
                       {item.title.toUpperCase()}
                     </h3>
-                    <p className="text-sm">{item.description}</p>
                     <p className="text-sm">Price: ${item.price}</p>
                     <p className="text-sm">Category: {item.category}</p>
                     <p className="text-sm">Brand: {item.brand}</p>
-                    <p className="text-sm">
-                      Available: {item.availability ? "Yes" : "No"}
+                    <p className="text-sm flex">
+                      Available: {item.availability ? <h4>in Stock</h4> : <h4>out of stock</h4>}
                     </p>
                   </div>
                 </div>
@@ -279,6 +319,7 @@ const Add = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

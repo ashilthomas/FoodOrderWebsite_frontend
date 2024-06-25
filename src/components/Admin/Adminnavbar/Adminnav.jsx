@@ -10,9 +10,9 @@ import {
   Transition,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { BsCart2 } from "react-icons/bs";
+
 import { Link, NavLink } from "react-router-dom";
-import { CiSearch } from "react-icons/ci";
+
 
 function Adminnave({setIsOverlayVisible,setOpen}) {
   const navigation = [
@@ -133,8 +133,11 @@ function Adminnave({setIsOverlayVisible,setOpen}) {
                               </Link>
                             )}
                           </MenuItem>
+                      
                           <MenuItem>
                             {({ active }) => (
+                              <Link to={"/addcustomization"}>
+                              
                               <a
                                 href="#"
                                 className={classNames(
@@ -142,8 +145,9 @@ function Adminnave({setIsOverlayVisible,setOpen}) {
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                                Sign out
+                                Addcustomzation
                               </a>
+                              </Link>
                             )}
                           </MenuItem>
                           <MenuItem>

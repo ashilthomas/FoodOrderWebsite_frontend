@@ -63,7 +63,7 @@ const Placeorder = () => {
                 />
             </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
             <div>
                 <input
                     type="text"
@@ -89,26 +89,7 @@ const Placeorder = () => {
             <div className="md:w-1/2 md:pl-4 mt-8 md:mt-0">
                 <h2 className="text-xl font-semibold">Order Summary</h2>
                 <div className="border rounded-lg p-4 mt-4">
-                    <div className="flex justify-between border-b pb-2">
-                        <span>Ultimate Loaded Nacho Fiesta</span>
-                        <span>$20</span>
-                        <div className="flex items-center justify-center space-x-4 bg-orange-600 text-white rounded-lg ">
-                  <button
-                    onClick={decrement}
-                    className="bg-orange-700 hover:bg-orange-800 px-3 py-2 rounded-lg"
-                  >
-                    -
-                  </button>
-                  <span className="text-lg">{count}</span>
-                  <button
-                    onClick={increment}
-                    className="bg-orange-700 hover:bg-orange-800 px-3 py-2 rounded-lg"
-                  >
-                    +
-                  </button>
-                </div>
-
-                    </div>
+                   
                     <div className="flex justify-between border-b py-2">
                         <span>Smoked Salmon Bagel</span>
                         <span>$40</span>
@@ -130,9 +111,9 @@ const Placeorder = () => {
                         <span>-$10</span>
                     </div>
                     <div>
-  	<form class="m-4 flex">
-    	<input class="rounded-l-lg p-4 border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white" placeholder="your@mail.com"/>
-		<button class="px-8 rounded-r-lg bg-yellow-400  text-gray-800 font-bold p-4 uppercase border-yellow-500 border-t border-b border-r">Subscribe</button>
+  	<form class="m-4 flex ">
+    	<input class="rounded-l-lg p-2 border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white" placeholder="Add coupon"/>
+		<button class="px-8 rounded-r-lg bg-orange-500  text-white  p-2 uppercase border-yellow-500 border-t border-b border-r">Coupon</button>
 	</form>
 </div>
                     <div className="flex justify-between mt-4 font-semibold ">
