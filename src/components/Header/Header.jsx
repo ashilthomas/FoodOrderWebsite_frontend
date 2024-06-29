@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Disclosure,
   Menu,
@@ -8,8 +8,25 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { BsCart2 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
+import { useSelector } from "react-redux";
+
 
 function Header({ setOpen }) {
+  const { cartItems} = useSelector((state)=>state.cartData)
+  const {cartRes} = useSelector((state)=>state.cartData)
+
+  const itemCount = useMemo(() => {
+    return cartItems?.reduce((total, cart) => total + cart.items.length, 0) || 0;
+  }, [cartItems]);
+
+
+
+  // const itemCount = cartItems?.reduce((total, cart) => total + cart.items.length, 0) || 0;
+
+
+
+ 
+
   const [menu, setMenu] = useState("menu");
 
   const handleMenu = (item) => {
@@ -85,14 +102,18 @@ function Header({ setOpen }) {
                         <CiSearch className="h-6 w-6 " aria-hidden="true" />
                       </button>
                     </Link>
+                    <div className="relative p-1">
+                    <div className="flex items-center justify-center h-4 w-4 bg-orange-500 text-white text-xs rounded-full absolute z-10 right-0 top-0">{itemCount}</div>
                     <button onClick={() => setOpen(true)}
                       type="button"
                       className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                     >
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Cart</span>
+                    
                       <BsCart2 className="h-6 w-6" aria-hidden="true" />
                     </button>
+                    </div>
                     <Link to={"/signup"}>
                     <button  className="ml-2 bg-orange-500 text-white py-2 px-8 rounded-full shadow-lg hover:bg-orange-600 transition duration-300">
                       Sign

@@ -11,7 +11,6 @@ import {
 } from "@headlessui/react";
 import { useParams } from "react-router-dom";
 import instance from "../Axios";
-import items from "../../Redux/items";
 import CardSkeleton from "../Skeletons/CardSkeleton";
 
 function classNames(...classes) {
@@ -35,7 +34,9 @@ function RestaurantMenuItems() {
         setCategoriesLoding(false)
        
         if(res.data.success){
-          setRestaurantsCategory(res.data.items);
+        //  setRestaurantsCategory(res.data.items)
+       
+         setTimeout( setRestaurantsCategory(res.data.items),5000)
          
          
         }else{
@@ -47,8 +48,8 @@ function RestaurantMenuItems() {
         console.error('Error fetching category items:', error);
       }
     };
-// fetchCategoryItems()
-    setTimeout(fetchCategoryItems, 5000); 
+fetchCategoryItems()
+  
   
   }, [category]);
 

@@ -19,86 +19,88 @@ import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from
 import { useParams } from 'react-router-dom';
 import instance from '../Axios';
 
+
+
 const RestaurentItems = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [restaurantItems,setRestaurantItems]=useState([])
-  const [restaurantDetails,setRestaurantDetails]=useState({})
+  const [singrestaurant,setSingleRestaurant]=useState({})
+ 
 
- const getRestaurantDetails = (details)=>{
-  setRestaurantDetails(details)
-  }
+
   const {id} = useParams()
-  console.log(id);
+
+console.log(id);
 
 
+useEffect(() => {
+  const fetchRestaurantsData = async () => {
+    try {
+      const res = await instance.post("menus/restaurantitems", {id} );
+      const restaurant = await instance.post("restaurent/singlerestaurant",{id} );
+      setSingleRestaurant(restaurant.data.restaurant);
+      setRestaurantItems(res.data.restaurantItem);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
-useEffect(()=>{
+  fetchRestaurantsData();
+}, [id]);
+const sortOptions = [
+  { name: 'Most Popular', href: '#', current: true },
+  { name: 'Best Rating', href: '#', current: false },
+  { name: 'Newest', href: '#', current: false },
+  { name: 'Price: Low to High', href: '#', current: false },
+  { name: 'Price: High to Low', href: '#', current: false },
+];
 
-  const fetchRestaurantsData = async()=>{
-    const res = await instance.post("menus/restaurantitems",id)
-    console.log(res.data.restaurantItem);
-    setRestaurantItems(res.data.restaurantItem)
+const subCategories = [
+  { name: 'Totes', href: '#' },
+  { name: 'Backpacks', href: '#' },
+  { name: 'Travel Bags', href: '#' },
+  { name: 'Hip Bags', href: '#' },
+  { name: 'Laptop Sleeves', href: '#' },
+];
 
-    
-  }
+const filters = [
+  {
+    id: 'color',
+    name: 'Color',
+    options: [
+      { value: 'white', label: 'White', checked: false },
+      { value: 'beige', label: 'Beige', checked: false },
+      { value: 'blue', label: 'Blue', checked: true },
+      { value: 'brown', label: 'Brown', checked: false },
+      { value: 'green', label: 'Green', checked: false },
+      { value: 'purple', label: 'Purple', checked: false },
+    ],
+  },
+  {
+    id: 'category',
+    name: 'Category',
+    options: [
+      { value: 'new-arrivals', label: 'New Arrivals', checked: false },
+      { value: 'sale', label: 'Sale', checked: false },
+      { value: 'travel', label: 'Travel', checked: true },
+      { value: 'organization', label: 'Organization', checked: false },
+      { value: 'accessories', label: 'Accessories', checked: false },
+    ],
+  },{
+    id: 'size',
+    name: 'Size',
+    options: [
+      { value: '2l', label: '2L', checked: false },
+      { value: '6l', label: '6L', checked: false },
+      { value: '12l', label: '12L', checked: false },
+      { value: '18l', label: '18L', checked: false },
+      { value: '20l', label: '20L', checked: false },
+      { value: '40l', label: '40L', checked: true },
+    ],
+  },
+];
+ 
 
-  fetchRestaurantsData()
-},[id])
-
-
-  const sortOptions = [
-    { name: 'Most Popular', href: '#', current: true },
-    { name: 'Best Rating', href: '#', current: false },
-    { name: 'Newest', href: '#', current: false },
-    { name: 'Price: Low to High', href: '#', current: false },
-    { name: 'Price: High to Low', href: '#', current: false },
-  ];
-
-  const subCategories = [
-    { name: 'Totes', href: '#' },
-    { name: 'Backpacks', href: '#' },
-    { name: 'Travel Bags', href: '#' },
-    { name: 'Hip Bags', href: '#' },
-    { name: 'Laptop Sleeves', href: '#' },
-  ];
-
-  const filters = [
-    {
-      id: 'color',
-      name: 'Color',
-      options: [
-        { value: 'white', label: 'White', checked: false },
-        { value: 'beige', label: 'Beige', checked: false },
-        { value: 'blue', label: 'Blue', checked: true },
-        { value: 'brown', label: 'Brown', checked: false },
-        { value: 'green', label: 'Green', checked: false },
-        { value: 'purple', label: 'Purple', checked: false },
-      ],
-    },
-    {
-      id: 'category',
-      name: 'Category',
-      options: [
-        { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-        { value: 'sale', label: 'Sale', checked: false },
-        { value: 'travel', label: 'Travel', checked: true },
-        { value: 'organization', label: 'Organization', checked: false },
-        { value: 'accessories', label: 'Accessories', checked: false },
-      ],
-    },
-    {
-      id: 'size',
-      name: 'Size',
-      options: [
-        { value: '2l', label: '2L', checked: false },
-        { value: '6l', label: '6L', checked: false },
-        { value: '12l', label: '12L', checked: false },
-        { value: '18l', label: '18L', checked: false },
-        { value: '20l', label: '20L', checked: false },
-        { value: '40l', label: '40L', checked: true },
-      ],
-    },
-  ];
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -107,12 +109,12 @@ useEffect(()=>{
   return (
     <div className="bg-white">
           <div className="text-center mb-8 bg-fixed py-20 bg-[url('')] bg-cover bg-center restaurant-bg">
-                    <h1 className="text-3xl font-bold text-white">Fiesta Mexico: Authentic Mexican Food</h1>
-                    <div className="text-gray-500">Ontario, Canada</div>
+                  <h1 className="text-3xl font-bold text-white">{singrestaurant.title}</h1>
+                    <div className="text-gray-500">{singrestaurant.location}</div>
                     <div className="flex justify-center items-center mt-2 text-green-500">
                       <span>4.0km</span>
                       <span className="mx-2">•</span>
-                      <span>5.0 (1k+ Reviews)</span>
+                      <span>{singrestaurant.rating}</span>
                     </div>
                   </div>
       <div>
@@ -372,18 +374,24 @@ useEffect(()=>{
 const MenuItem = ({items} ) => {
   console.log(items);
   const [isOverlayVisible, setOverlayVisible] = useState(false);
+  const [singleMenuItems,setSinglMenuItems]=useState({})
 
-  const handleOpenOverlay = () => {
+  const handleOpenOverlay = async(id) => {
+    console.log(id);
+
+    const res = await instance.post("menus/singleMenuItems",{id})
+    setSinglMenuItems(res.data.menuItem)
     setOverlayVisible(true);
   };
 
   const handleCloseOverlay = () => {
     setOverlayVisible(false);
   };
-
+console.log("hkhdskf",singleMenuItems);
+ 
   return (
     <>
-      <Itemdetails isVisible={isOverlayVisible} onClose={handleCloseOverlay} />
+      <Itemdetails isVisible={isOverlayVisible} onClose={handleCloseOverlay} singleMenuItems={singleMenuItems} />
       <div className="flex p-4 bg-white shadow rounded-lg mb-4">
         <img className="w-24 h-24 object-cover rounded-lg mr-4" src={items?.image} alt={items?.title} />
         <div className="flex-1">
@@ -395,7 +403,7 @@ const MenuItem = ({items} ) => {
           <p className="text-gray-600 mb-2">{items?.description}</p>
           <div className="text-lg font-bold">${items?.price}</div>
         </div>
-        <button onClick={handleOpenOverlay} className="bg-orange-500 text-white rounded-lg px-4 py-2 ml-4 self-start">
+        <button onClick={()=>handleOpenOverlay(items._id)} className="bg-orange-500 text-white rounded-lg px-4 py-2 ml-4 self-start">
           +Add
         </button>
       </div>

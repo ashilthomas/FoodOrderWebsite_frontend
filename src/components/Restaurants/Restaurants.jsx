@@ -76,13 +76,27 @@ const Restaurants = () => {
 
 
 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {loading && <CardSkeleton />}
-        {error && <p>Error: {error}</p>}
-        {!loading && !error && data && data.map((dish, index) => (
-        
-            <Cards dish={dish}  />
+
+
+  {
+    loading ? (
+      <>
+        <CardSkeleton />
+        <CardSkeleton />
+        <CardSkeleton />
+        <CardSkeleton />
+      </>
+    ) :(
+
+
+      data.map((dish,index)=>(
+        <Cards dish={dish}  />
+      ))
+    
+)}
       
-        ))}
+     
+       
       </div>
       <div className='mt-5 absolute bottom-0 right-0'>
          <Pagination

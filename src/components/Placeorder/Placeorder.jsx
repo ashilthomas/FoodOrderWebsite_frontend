@@ -3,10 +3,6 @@ import React, { useState } from 'react';
 const Placeorder = () => {
 
 
-    const [count, setCount] = useState(1);
-
-    const increment = () => setCount(count + 1);
-    const decrement = () => setCount(count > 1 ? count - 1 : 1);
     return (
         <div className="max-w-[900px] mx-auto py-14 flex flex-col md:flex-row">
             {/* Address Selection Section */}
