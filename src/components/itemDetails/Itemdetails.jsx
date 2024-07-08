@@ -231,7 +231,7 @@ const dispatch =useDispatch()
  
 
   try {
-    const res = await instance.post("cart/addtocart", payload);
+    const res = await instance.post("cart/addtocart", payload,{withCredentials:true});
     dispatch(setResDetails(res.data));
     if (res.data.success) {
       toast({
@@ -249,13 +249,21 @@ const dispatch =useDispatch()
       });
     }
   } catch (error) {
-    console.error(error);
-    toast({
-      title: 'An error occurred while adding to cart', // Provide a generic error message
-      status: 'error',
-      duration: 9000,
-      isClosable: true,
-    });
+    if (error.response && error.response.status === 403) {
+      toast({
+        title: "Token expired. Please log in again.",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: error.response.message,
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+    }
   }
 }
   return (

@@ -21,6 +21,9 @@ import Signin from "./components/Sign/Signin/Signin.jsx";
 import { Provider } from 'react-redux';
 import { store } from "./Redux/store.js";
 import AddCustomization from "./components/Admin/AddCustomization/AddCustomization.jsx";
+import AddCoupons from "./components/Admin/AddCoupons/AddCoupons.jsx";
+import AdminRoutes from "./components/Utils/protectedRoutes/AdminRoutes.js";
+import UserRoute from "./components/Utils/protectedRoutes/UserRoute.js";
 
 const router = createBrowserRouter([
   {
@@ -31,8 +34,12 @@ const router = createBrowserRouter([
     element:<Signup/>
   },
   {
-   
-    element: <HomeLayout />,
+  
+    element:(
+     <UserRoute>
+    <HomeLayout />,
+    </UserRoute>
+    ),
     children: [
       {
         path: "/",
@@ -67,7 +74,13 @@ const router = createBrowserRouter([
     ],
   },
   {
-    element: <AdminLayout />,
+    element:(
+    <AdminRoutes>
+
+<AdminLayout />,
+    </AdminRoutes>),
+    
+  
     children: [
       {
         path: "/admin",
@@ -83,6 +96,9 @@ const router = createBrowserRouter([
       },{
         path:"/addcustomization",
         element:<AddCustomization/>
+      },{
+        path:"/addcoupon",
+        element:<AddCoupons/>
       }
     ],
   },

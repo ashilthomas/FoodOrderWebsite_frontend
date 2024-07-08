@@ -17,7 +17,7 @@ import { getallCartItems } from "../../Redux/cart";
 export default function Slideover({ open, setOpen }) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cartData.cartItems || []);
-
+ console.log(cartItems.items);
   useEffect(() => {
     const fetchCartItems = async () => {
       const res = await instance.get("cart/allcartitems");
@@ -77,17 +77,21 @@ export default function Slideover({ open, setOpen }) {
                         <div className="flow-root">
                           <ul role="list" className="-my-6 divide-y divide-gray-200">
                             {cartItems.length === 0 ? (
-                              <div>no item found</div>
+                              <div>
+                                <img src="https://shuvautsav.com/frontend/dist/images/logo/no-item-found-here.png" alt="" />
+                              </div>
                             ) : (
                               cartItems.map((product) => (
-                                <li key={product._id} className="flex py-6">
+                                <li key={product?._id} className="flex py-6">
                                   <div className="flex flex-col w-full">
-                                    {product.items.map((item) => (
-                                      <div key={item._id} className="flex py-2">
+                                    {  product.items.length==0?(  <div>
+                                <img src="https://shuvautsav.com/frontend/dist/images/logo/no-item-found-here.png" alt="" />
+                              </div>):  product?.items?.map((item) => (
+                                      <div key={item?._id} className="flex py-2">
                                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                           <img
-                                            src={item.productId.image} // Adjust the image source if needed
-                                            alt={item.imageAlt} // Adjust the alt text if needed
+                                            src={item?.productId?.image} // Adjust the image source if needed
+                                            alt={item?.imageAlt} // Adjust the alt text if needed
                                             className="h-full w-full object-cover object-center"
                                           />
                                         </div>
@@ -96,13 +100,13 @@ export default function Slideover({ open, setOpen }) {
                                             <div className="flex justify-between text-base font-medium text-gray-900">
                                               <h3>
                                                 <a href={product.href}>
-                                                  {item.productId.title}
+                                                  {item.productId?.title}
                                                 </a>
                                               </h3>
-                                              <p className="ml-4">{product.totalPrice}</p>
+                                              <p className="ml-4">{item.productId.price}</p>
                                             </div>
                                             <p className="mt-1 text-sm text-gray-500">
-                                              {item.customization.map((custom) => (
+                                              {item?.customization?.map((custom) => (
                                                 <span key={custom._id}>
                                                   {custom.name} ({custom.price})
                                                 </span>

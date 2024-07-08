@@ -25,6 +25,7 @@ const RestaurentItems = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [restaurantItems,setRestaurantItems]=useState([])
   const [singrestaurant,setSingleRestaurant]=useState({})
+  console.log(restaurantItems);
  
 
 
@@ -56,11 +57,11 @@ const sortOptions = [
 ];
 
 const subCategories = [
-  { name: 'Totes', href: '#' },
-  { name: 'Backpacks', href: '#' },
-  { name: 'Travel Bags', href: '#' },
-  { name: 'Hip Bags', href: '#' },
-  { name: 'Laptop Sleeves', href: '#' },
+  { name: 'burger', href: '#' },
+  { name: 'biriyani', href: '#' },
+  { name: 'pizza', href: '#' },
+  { name: 'samoza', href: '#' },
+  { name: 'noodils', href: '#' },
 ];
 
 const filters = [
@@ -80,22 +81,20 @@ const filters = [
     id: 'category',
     name: 'Category',
     options: [
-      { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-      { value: 'sale', label: 'Sale', checked: false },
-      { value: 'travel', label: 'Travel', checked: true },
-      { value: 'organization', label: 'Organization', checked: false },
-      { value: 'accessories', label: 'Accessories', checked: false },
+      { value: 'Rolle', label: 'Rolles', checked: false },
+      { value: 'Pizza', label: 'Pizza', checked: false },
+      { value: 'Deserts', label: 'Deserts', checked: true },
+      { value: 'Salad', label: 'Salad', checked: false },
+      { value: 'cake', label: 'cake', checked: false },
     ],
   },{
     id: 'size',
     name: 'Size',
     options: [
-      { value: '2l', label: '2L', checked: false },
-      { value: '6l', label: '6L', checked: false },
-      { value: '12l', label: '12L', checked: false },
-      { value: '18l', label: '18L', checked: false },
-      { value: '20l', label: '20L', checked: false },
-      { value: '40l', label: '40L', checked: true },
+      { value: 'M', label: 'M', checked: false },
+      { value: 'S', label: 'S', checked: false },
+      { value: 'L', label: 'L', checked: false },
+      
     ],
   },
 ];

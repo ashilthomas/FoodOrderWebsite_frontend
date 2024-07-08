@@ -22,8 +22,7 @@ function RestaurantMenuItems() {
   const [noItem,setNoitem]=useState('')
   const [categoriesLoading,setCategoriesLoding]=useState(false)
   const category = useParams();
-
-
+ 
 
   useEffect(() => {
  
@@ -34,7 +33,7 @@ function RestaurantMenuItems() {
         setCategoriesLoding(false)
        
         if(res.data.success){
-        //  setRestaurantsCategory(res.data.items)
+      
        
          setTimeout( setRestaurantsCategory(res.data.items),5000)
          
@@ -49,9 +48,12 @@ function RestaurantMenuItems() {
       }
     };
 fetchCategoryItems()
+
   
   
   }, [category]);
+
+ 
 
   return (
     <div className="max-w-[1300px] mx-auto py-14 padding">
@@ -72,13 +74,13 @@ fetchCategoryItems()
             <IoIosArrowDown />
           </span>
         </button>
-        <button className="flex-grow sm:flex-grow-0 px-4 py-2 bg-orange-600 rounded text-white mb-2">
+        <button  className="flex-grow sm:flex-grow-0 px-4 py-2 bg-orange-600 rounded text-white mb-2">
           Less than 30 mins
         </button>
-        <button className="flex-grow sm:flex-grow-0 px-4 py-2 bg-orange-600 rounded text-white mb-2">
+        <button  className="flex-grow sm:flex-grow-0 px-4 py-2 bg-orange-600 rounded text-white mb-2">
           Rs. 300-Rs. 600
         </button>
-        <button className="flex-grow sm:flex-grow-0 px-4 py-2 bg-orange-600 rounded text-white mb-2">
+        <button  className="flex-grow sm:flex-grow-0 px-4 py-2 bg-orange-600 rounded text-white mb-2">
           Less than Rs. 300
         </button>
       </div>

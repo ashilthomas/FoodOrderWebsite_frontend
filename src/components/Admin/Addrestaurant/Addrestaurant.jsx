@@ -72,7 +72,7 @@ const AddRestaurant = () => {
   };
 
   return (
-    <div className=" mt-10 p-5 w-full">
+    <div className=" mt-10 md:ml-64  p-5 w-full">
       <ToastContainer />
       <div className="flex gap-3">
         <div className="bg-white p-5 rounded-lg shadow-md w-full ">

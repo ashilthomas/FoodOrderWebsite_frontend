@@ -132,7 +132,7 @@ const Add = () => {
 <>
 
 {/* max-w-7xl */}
-    <div className=" mx-auto mt-10 p-5  ml-10 ">
+    <div className=" mx-auto mt-10 p-5  md:ml-64 ">
 
     {/* className="grid grid-cols-1 md:grid-cols-2 gap-6" */}
       <div className="sm:flex sm:gap-3 " >

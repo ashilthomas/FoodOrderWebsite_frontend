@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 
 function Header({ setOpen }) {
   const { cartItems} = useSelector((state)=>state.cartData)
-  const {cartRes} = useSelector((state)=>state.cartData)
+ 
 
   const itemCount = useMemo(() => {
     return cartItems?.reduce((total, cart) => total + cart.items.length, 0) || 0;
@@ -195,6 +195,7 @@ function Header({ setOpen }) {
                               </Link>
                             )}
                           </Menu.Item>
+                         
                         </Menu.Items>
                       </Transition>
                     </Menu>
