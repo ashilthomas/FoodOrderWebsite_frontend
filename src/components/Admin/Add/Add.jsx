@@ -51,8 +51,8 @@ const Add = () => {
         setRestaurants(restaurant.data);
         setCategories(['Pizza', 'Biriyani', "Dessert","salad","Rolls",'Sandwich','Cake','Pure Veg','Pasta','Noodles','Burger']);
   
-        const menuRes = await axios.get(
-          "http://localhost:3000/api/v1/menus/allfoods"
+        const menuRes = await instance.get(
+          "menus/allfoods"
         );
         setMenuItems(menuRes.data.allMenus); // Corrected line: access the data property
 
@@ -84,8 +84,8 @@ const Add = () => {
     formData.append('image', data.image[0]); 
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/menus/addfood",
+      const response = await instance.post(
+        "menus/addfood",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -120,7 +120,7 @@ const Add = () => {
 
   const handleRemove = async (id) => {
     try {
-      await axios.delete(`/api/menus/${id}`);
+      await instance.delete(`/api/menus/${id}`);
       setMenuItems(menuItems.filter((item) => item._id !== id)); // Remove item from the list
     } catch (error) {
       console.error("There was an error deleting the menu item:", error);

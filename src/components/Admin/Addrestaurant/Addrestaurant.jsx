@@ -6,6 +6,7 @@ import * as yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PhotoIcon } from '@heroicons/react/20/solid';
+import instance from '../../Axios';
 
 const schema = yup.object().shape({
   title: yup.string().required('Title is required'),
@@ -27,7 +28,7 @@ const AddRestaurant = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/v1/restaurent/allrestaurant');
+        const response = await instance.get('restaurent/allrestaurant');
         setRestaurants(response.data);
       } catch (error) {
         console.error('Error fetching restaurants:', error);
@@ -47,7 +48,7 @@ const AddRestaurant = () => {
       formData.append('location', data.location);
       formData.append('restaurantimg', data.restaurantimg[0]); 
 
-      const response = await axios.post('http://localhost:3000/api/v1/restaurent/addrestaurant', formData, {
+      const response = await instance.post('/restaurent/addrestaurant', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -63,7 +64,7 @@ const AddRestaurant = () => {
 
   const handleRemove = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/v1/restaurent/removerestaurant/${id}`);
+      await instance.delete(`restaurent/removerestaurant/${id}`);
       setRestaurants(restaurants.filter((restaurant) => restaurant._id !== id));
     } catch (error) {
       console.error('Error removing restaurant:', error);
