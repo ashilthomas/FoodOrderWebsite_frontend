@@ -51,9 +51,10 @@ const UserRoute = ({ children }) => {
       }
     };
     checkUser();
-  }, [navigate]);
+  }, [navigate,toast]);
 
   return children;
 };
 
 export default UserRoute;
+
