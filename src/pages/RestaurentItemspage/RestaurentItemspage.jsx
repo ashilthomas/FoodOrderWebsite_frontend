@@ -5,7 +5,7 @@ import RestaurentItems from '../../components/RestaurentItems/RestaurentItesms'
 
 function RestaurentItemspage() {
   return (
-    <div>
+    <div className='px-2.5'>
         <RestaurentItems/>
         <Footer/>
     </div>

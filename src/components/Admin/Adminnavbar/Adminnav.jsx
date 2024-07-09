@@ -152,7 +152,8 @@ function Adminnave({setIsOverlayVisible,setOpen}) {
                           </MenuItem>
                           <MenuItem>
                             {({ active }) => (
-                                <Link to={"/adminorders"}>
+                              <Link to={"/addcoupon"}>
+                              
                               <a
                                 href="#"
                                 className={classNames(
@@ -160,11 +161,12 @@ function Adminnave({setIsOverlayVisible,setOpen}) {
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
-                              Orders
+                                AddCoupon
                               </a>
                               </Link>
                             )}
                           </MenuItem>
+                          
                         </MenuItems>
                       </Transition>
                     </Menu>

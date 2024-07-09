@@ -6,10 +6,6 @@ import Offers from "../../components/Offers/Offers";
 import Appdownloade from "../../components/Appdownload/Appdownloade";
 import Footer from "../../components/Footer/Footer";
 
-import Adminsidebar from "../../components/Sidebar/AdminSidebar/Adminsidebar";
-import CardSkeleton from "../../components/Skeletons/CardSkeleton";
-import RestaurantItemskeletons from "../../components/Skeletons/RestaurantItemskeletons";
-
 
 
 function Home() {
@@ -21,8 +17,7 @@ function Home() {
       <Offers />
       <Appdownloade />
       <Footer />
-      {/* <Adminsidebar/> */}
-     <RestaurantItemskeletons/>
+    
 
      
    

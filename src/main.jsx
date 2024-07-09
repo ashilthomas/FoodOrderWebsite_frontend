@@ -70,6 +70,9 @@ const router = createBrowserRouter([
       },{
         path:"/contact",
         element:<Contactpage/>
+      }, {
+        path: "/adminorders",
+        element: <Orders />,
       }
     ],
   },
@@ -90,10 +93,7 @@ const router = createBrowserRouter([
         path: "/addrestaurant",
         element: <Addrestaurant />,
       },
-      {
-        path: "/adminorders",
-        element: <Orders />,
-      },{
+     {
         path:"/addcustomization",
         element:<AddCustomization/>
       },{

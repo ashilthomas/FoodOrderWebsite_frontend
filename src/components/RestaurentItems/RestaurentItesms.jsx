@@ -18,6 +18,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid';
 import { useParams } from 'react-router-dom';
 import instance from '../Axios';
+import { Skeleton, Stack } from '@chakra-ui/react';
 
 
 
@@ -25,6 +26,7 @@ const RestaurentItems = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [restaurantItems,setRestaurantItems]=useState([])
   const [singrestaurant,setSingleRestaurant]=useState({})
+  const [loading,setLoading]=useState(false)
   console.log(restaurantItems);
  
 
@@ -37,10 +39,12 @@ console.log(id);
 useEffect(() => {
   const fetchRestaurantsData = async () => {
     try {
+      setLoading(true)
       const res = await instance.post("menus/restaurantitems", {id} );
       const restaurant = await instance.post("restaurent/singlerestaurant",{id} );
       setSingleRestaurant(restaurant.data.restaurant);
       setRestaurantItems(res.data.restaurantItem);
+      setLoading(false)
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -287,6 +291,8 @@ const filters = [
               <form className="hidden lg:block">
                 <h3 className="sr-only">Categories</h3>
                 <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
+
+
                   {subCategories.map((category) => (
                     <li key={category.name}>
                       <a href={category.href}>{category.name}</a>
@@ -345,10 +351,17 @@ const filters = [
                   <div >
                     <h2 className="text-2xl font-semibold mb-4">Best Seller</h2>
                     {
+                      loading?(
+<Stack>
+  <Skeleton height='20px' />
+  <Skeleton height='20px' />
+  <Skeleton height='20px' />
+</Stack>
+                      ):(
                       restaurantItems && restaurantItems.map((items,i)=>(
                         <MenuItem items={items} 
                       />
-                      ))
+                      )))
                     }
                    
                     <h2 className="text-2xl font-semibold mb-4">Special Combos</h2>
@@ -386,8 +399,7 @@ const MenuItem = ({items} ) => {
   const handleCloseOverlay = () => {
     setOverlayVisible(false);
   };
-console.log("hkhdskf",singleMenuItems);
- 
+
   return (
     <>
       <Itemdetails isVisible={isOverlayVisible} onClose={handleCloseOverlay} singleMenuItems={singleMenuItems} />

@@ -278,7 +278,7 @@ const dispatch =useDispatch()
               &times;
             </button>
 
-            <div className="flex">
+            <div className="md:flex">
               <div>
                 <img className="w-72" src={singleMenuItems.image} alt="" />
 

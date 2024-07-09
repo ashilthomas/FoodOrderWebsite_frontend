@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, CardBody, CardFooter, Heading, Image, Skeleton, Stack, Text } from '@chakra-ui/react';
 import instance from '../../Axios';
 import { useToast } from '@chakra-ui/react';
-import CardSkeleton from '../../Skeletons/CardSkeleton';
+
 
 function Orders() {
   const [orderData, setOrderData] = useState([]);
@@ -69,16 +69,25 @@ console.log("all order page rendering");
   // }
 
   return (
-    <div className='max-w-[1300px] mx-auto py-14 padding md:ml-64 w-full'>
+    <div className='max-w-[1300px] mx-auto py-14 padding md:flex'>
+      <div className='w-2/5'>
+      <img src="https://th.bing.com/th/id/OIP.HHVUf3TYqncgpJXyCMmxyAHaHa?rs=1&pid=ImgDetMain" className='w-56' alt="" />
+      <div className='mt-5'>
+         <h2>name</h2>
+        <h4>email</h4>
+      </div>
+       
+      </div>
+
+ <div className='w-full'>
+  <h2 className='text-2xl mb-8 font-bold'>Order</h2>
 
 
 
       {
-      orderData.length === 0?(<div><Stack>
-        <Skeleton height='20px' />
-        <Skeleton height='20px' />
-        <Skeleton height='20px' />
-      </Stack></div>):(
+      orderData.length === 0?(<div>
+       <img src="https://shuvautsav.com/frontend/dist/images/logo/no-item-found-here.png" className='w-full h-96 object-contain' alt="" />
+      </div>):(
       
       
       orderData.map((order) =>
@@ -118,6 +127,7 @@ console.log("all order page rendering");
           ))
         )
       ))}
+       </div>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import Footer from '../../components/Footer/Footer'
 
 function Placeorderpage() {
   return (
-    <div>
+    <div className='px-2.5'>
         <Placeorder/>
         <Footer/>
     </div>
