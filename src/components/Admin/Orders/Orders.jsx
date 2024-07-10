@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, CardBody, CardFooter, Heading, Image, Skeleton, Stack, Text } from '@chakra-ui/react';
 import instance from '../../Axios';
 import { useToast } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 
 
 function Orders() {
   const [orderData, setOrderData] = useState([]);
+ 
   const [deleteRes,setDeleteRes]=useState({})
+  const {isAdmin} =useSelector((state)=>state.tokenData)
+  const {token}=useSelector((state)=>state.tokenData)
 
   const toast = useToast()
 console.log("all order page rendering");
@@ -14,7 +18,11 @@ console.log("all order page rendering");
   useEffect(() => {
     const getAllOrders = async () => {
       try {
-        const res = await instance.get("order/allorderitems",{withCredentials:true});
+        const res = await instance.get("order/allorderitems",{
+          headers: {
+            'Authorization': ` ${token}` // Pass the token here
+          }
+        });
         setOrderData(res.data);
       } catch (error) {
         console.error("Error fetching order data:", error);
@@ -73,8 +81,8 @@ console.log("all order page rendering");
       <div className='w-2/5'>
       <img src="https://th.bing.com/th/id/OIP.HHVUf3TYqncgpJXyCMmxyAHaHa?rs=1&pid=ImgDetMain" className='w-56' alt="" />
       <div className='mt-5'>
-         <h2>name</h2>
-        <h4>email</h4>
+         <h2>{isAdmin?.name}</h2>
+        <h4>{isAdmin?.email}</h4>
       </div>
        
       </div>

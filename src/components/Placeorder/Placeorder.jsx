@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 const Placeorder = () => {
   const toast = useToast();
   const cartItems = useSelector((state) => state.cartData.cartItems || []);
-  console.log("cartO+items",cartItems);
+  const {token} =useSelector((state)=>state.tokenData)
+ 
  
  
 
@@ -35,7 +36,7 @@ const Placeorder = () => {
     [subTotal, discountAmount]
   );
 
-  console.log("place order rendering");
+
 
 
 
@@ -68,7 +69,9 @@ const Placeorder = () => {
     const response = await instance.post(
       "order/placeorder",
       { amount: amountToPay },{
-        withCredentials:true
+        headers: {
+          'Authorization': ` ${token}` // Pass the token here
+        }
       }
     );
 
@@ -90,12 +93,16 @@ const Placeorder = () => {
 
         const validateResponse = await instance.post(
           "order/verifyorder",
-          body,{withCredentials:true}
+          body,{
+            headers: {
+              'Authorization': ` ${token}` // Pass the token here
+            }
+          }
         );
 
         const jsonResponse = await validateResponse;
 
-        console.log("jsonResponse", jsonResponse);
+      
       },
       prefill: {
         name: "Ashil Coder",

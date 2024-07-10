@@ -2,17 +2,25 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import instance from "../../Axios";
 import { useToast } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../../Redux/token";
 
 const UserRoute = ({ children }) => {
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const toast = useToast();
+  const token = sessionStorage.getItem('token');
+  dispatch(setToken(token))
 
+  
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const res = await instance.get("user/checkuser", {
-          withCredentials: true,
-        });
+        const res = await instance.get("user/checkuser",  {
+            headers: {
+              'Authorization': ` ${token}` // Pass the token here
+            }
+          });
 
         const data = res.data;
        

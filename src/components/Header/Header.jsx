@@ -14,6 +14,11 @@ import jsCookie from "js-cookie";
 
 function Header({ setOpen }) {
   const { cartItems} = useSelector((state)=>state.cartData)
+  const {token} =useSelector((state)=>state.tokenData)
+  const {isAdmin} =useSelector((state)=>state.tokenData)
+  
+ 
+  
   const navigate=useNavigate()
  
 
@@ -21,11 +26,12 @@ function Header({ setOpen }) {
     return cartItems?.reduce((total, cart) => total + cart.items.length, 0) || 0;
   }, [cartItems]);
 
-const token =jsCookie.get('token')
+// const token =jsCookie.get('token')
 
 
 const handileLogout =()=>{
   jsCookie.remove("token")
+  sessionStorage.removeItem('token');
   navigate('/signup')
 }
 
@@ -186,8 +192,9 @@ const handileLogout =()=>{
                               </a>
                             )}
                           </Menu.Item>
-                        
-                          <Menu.Item>
+
+                          {
+                            isAdmin.role ==="admin" && <Menu.Item>
                             {({ active }) => (
                               <Link to={"/admin"}>
                                 <span
@@ -201,6 +208,9 @@ const handileLogout =()=>{
                               </Link>
                             )}
                           </Menu.Item>
+                          }
+                        
+                         
                           <Menu.Item>
                             {({ active }) => (
                             
@@ -209,7 +219,7 @@ const handileLogout =()=>{
                                   className={classNames(
                                 
                                     active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm text-gray-700"
+                                    "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
                                   )}
                                 >
                                 Sign out

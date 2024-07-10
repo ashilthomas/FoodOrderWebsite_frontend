@@ -2,16 +2,21 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import instance from "../../Axios";
 import { useToast } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
 const AdminRoutes = ({ children }) => {
   const navigate = useNavigate();
   const toast = useToast();
+  const {token} =useSelector((state)=>state.tokenData)
+  
 
   useEffect(() => {
     const checkUser = async () => {
       try {
         const res = await instance.get("user/checkAdmin", {
-          withCredentials: true,
+          headers: {
+            'Authorization': ` ${token}` // Pass the token here
+          }
         });
 
         const data = res.data;

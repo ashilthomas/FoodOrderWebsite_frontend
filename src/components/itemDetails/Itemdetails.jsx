@@ -191,13 +191,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useToast } from '@chakra-ui/react';
 
 function Itemdetails({ isVisible, onClose, singleMenuItems }) {
+  const {token} =useSelector((state)=>state.tokenData)
   const toast = useToast()
 
 
   const [selectedSize, setSelectedSize] = useState(singleMenuItems?.customization?.sizeOptions[0]?.name || "Size S");
   const [selectedSauce, setSelectedSauce] = useState(singleMenuItems?.customization?.sauceOptions[0]?.name || "Mustard");
 
-  console.log("selectd",selectedSize);
+
 const dispatch =useDispatch()
   const [quantity, setQuantity] = useState(1);
 
@@ -231,7 +232,11 @@ const dispatch =useDispatch()
  
 
   try {
-    const res = await instance.post("cart/addtocart", payload,{withCredentials:true});
+    const res = await instance.post("cart/addtocart", payload, {
+      headers: {
+        'Authorization': ` ${token}` // Pass the token here
+      }
+    });
     dispatch(setResDetails(res.data));
     if (res.data.success) {
       toast({

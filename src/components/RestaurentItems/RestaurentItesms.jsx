@@ -27,13 +27,13 @@ const RestaurentItems = () => {
   const [restaurantItems,setRestaurantItems]=useState([])
   const [singrestaurant,setSingleRestaurant]=useState({})
   const [loading,setLoading]=useState(false)
-  console.log(restaurantItems);
+ 
  
 
-
+  
   const {id} = useParams()
 
-console.log(id);
+
 
 
 useEffect(() => {

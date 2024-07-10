@@ -17,16 +17,23 @@ import { getallCartItems } from "../../Redux/cart";
 export default function Slideover({ open, setOpen }) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cartData.cartItems || []);
- console.log(cartItems.items);
+  const token = sessionStorage.getItem('token');
+
   useEffect(() => {
     const fetchCartItems = async () => {
-      const res = await instance.get("cart/allcartitems");
+      const res = await instance.get("cart/allcartitems", {
+
+        headers: {
+          'Authorization': ` ${token}` // Pass the token here
+        }
+      });
+    
       dispatch(getallCartItems(res.data.cart));
     };
    
       fetchCartItems();
   
-  }, [ dispatch]);
+  }, [ dispatch,open]);
 
   return (
     <Transition show={open}>

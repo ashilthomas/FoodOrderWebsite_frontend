@@ -22,7 +22,7 @@ function Signup() {
 
   const onSubmit = async(data)=>{
     const res = await instance.post("user/register",data,{withCredentials:true})
-    console.log(res.data);
+  
     if(res.data.success){
       toast({
         title: res.data.message,
@@ -32,7 +32,7 @@ function Signup() {
       })
 
       setTimeout(() => {
-        navigation("/")
+        navigation("/signin")
       }, 2000);
     }else{
       toast({

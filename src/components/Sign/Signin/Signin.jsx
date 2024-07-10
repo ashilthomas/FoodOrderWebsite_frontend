@@ -5,6 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import instance from '../../Axios';
 import { useToast } from '@chakra-ui/react';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../../Redux/token';
 
 
 
@@ -15,6 +17,7 @@ const schema = yup.object({
 function Signin() {
     const toast = useToast()
    const navigation = useNavigate()
+   const dispatch =useDispatch()
 
     const { register, handleSubmit, formState:{ errors } } = useForm({
         resolver: yupResolver(schema)
@@ -23,7 +26,9 @@ function Signin() {
 
       const onSubmit = async(data)=>{
         const res = await instance.post("user/login",data,{withCredentials:true})
-        console.log(res.data);
+        dispatch(setUser(res.data.user))
+
+        sessionStorage.setItem("token", res.data.token);
         if(res.data.success){
           toast({
             title: res.data.message,
