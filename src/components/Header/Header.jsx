@@ -32,7 +32,7 @@ function Header({ setOpen }) {
 const handileLogout =()=>{
   jsCookie.remove("token")
   sessionStorage.removeItem('token');
-  navigate('/signup')
+  navigate('/signin')
 }
 
 

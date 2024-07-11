@@ -62,6 +62,7 @@ function Signin() {
             </label>
             <input
              {...register("email")}
+             value={"ashil@gmail.com"}
               type="email"
               id="email"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
@@ -75,6 +76,7 @@ function Signin() {
             </label>
             <input
              {...register("password")}
+             value={"12345678"}
               type="password"
               id="password"
               className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"

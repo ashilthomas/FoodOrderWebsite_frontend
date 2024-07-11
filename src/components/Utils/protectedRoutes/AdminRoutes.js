@@ -8,7 +8,7 @@ const AdminRoutes = ({ children }) => {
   const navigate = useNavigate();
   const toast = useToast();
   const {token} =useSelector((state)=>state.tokenData)
-  
+
 
   useEffect(() => {
     const checkUser = async () => {
@@ -57,7 +57,7 @@ const AdminRoutes = ({ children }) => {
             duration: 9000,
             isClosable: true,
           });
-          navigate("/signup", { replace: true });
+          navigate("/signin", { replace: true });
         }
       
       }

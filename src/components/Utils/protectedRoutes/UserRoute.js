@@ -54,7 +54,7 @@ const UserRoute = ({ children }) => {
               duration: 9000,
               isClosable: true,
             });
-            navigate("/signup", { replace: true });
+            navigate("/signin", { replace: true });
           }
       }
     };
