@@ -12,7 +12,7 @@ const Placeorder = () => {
  
  
 
-  const [discount, setDiscount] = useState({});
+  const [discount, setDiscount] = useState({ discount: 0 })
   const {
     register,
     handleSubmit,
@@ -27,10 +27,10 @@ const Placeorder = () => {
   );
 
   const discountAmount = useMemo(
-    () => (discount.discount ? (subTotal * discount.discount) / 100 : 0),
+    () => (discount?.discount ? (subTotal * discount.discount) / 100 : 0),
     [subTotal, discount]
   );
-
+  
   const finalPrice = useMemo(
     () => subTotal - discountAmount,
     [subTotal, discountAmount]
@@ -40,27 +40,37 @@ const Placeorder = () => {
 
 
 
-
   const onSubmit = async (data) => {
-   
-    const res = await instance.post("coupon/couponvalidate", { data });
-    setDiscount(res.data.coupon);
-    if (res.data.success) {
+    try {
+      const res = await instance.post("coupon/couponvalidate", { data });
+      if (res.data.success && res.data.coupon) {
+        setDiscount(res.data.coupon); // Apply the coupon
+        toast({
+          title: res.data.message,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        setDiscount({ discount: 0 }); // Reset discount on failure
+        toast({
+          title: res.data.message || "Invalid coupon code",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      setDiscount({ discount: 0 }); // Reset discount on error
       toast({
-        title: res.data.message,
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-    } else {
-      toast({
-        title: res.data.message,
+        title: "Something went wrong. Please try again.",
         status: "error",
         duration: 9000,
         isClosable: true,
       });
     }
   };
+  
 
   const paymentHandler = async (event) => {
 
@@ -261,10 +271,10 @@ const Placeorder = () => {
             </form>
           </div>
           <div className="flex justify-between mt-4 font-semibold ">
-            {discount.discount ? (
+            {discount?.discount ? (
               <>
                 <p>
-                  Discount: ${discountAmount.toFixed(2)} ({discount.discount}%)
+                  Discount: ${discountAmount.toFixed(2)} ({discount?.discount}%)
                 </p>
                 <p>Final Price: ${finalPrice.toFixed(2)}</p>
               </>

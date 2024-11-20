@@ -57,14 +57,14 @@ fetchCategoryItems()
 
   return (
     <div className="max-w-[1300px] mx-auto py-14 padding">
-      <h1 className="text-3xl font-bold mb-4">Biryani</h1>
+      <h1 className="text-3xl font-bold mb-4">Restaurants</h1>
       <p className="mb-6">
         Taste these delectable classics, delectable biryanis to make your day.
       </p>
       <div className="flex flex-wrap space-x-4 mb-6 ">
         <button className="flex-grow sm:flex-grow-0  bg-orange-600 rounded text-white flex gap-2 items-center mb-2">
           <Dropdown />{" "}
-          <span>
+          <span className="pl-1 pr-2">
             <IoFilter />
           </span>
         </button>
@@ -110,7 +110,7 @@ const Dropdown = () => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <MenuButton className="inline-flex w-full justify-center  rounded-md bg-inherit    text-white">
+        <MenuButton className="inline-flex w-full justify-center  rounded-md bg-inherit pl-3    text-white">
           filter
         </MenuButton>
       </div>

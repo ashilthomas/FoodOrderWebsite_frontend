@@ -80,7 +80,7 @@ const router = createBrowserRouter([
     element:(
     <AdminRoutes>
 
-<AdminLayout />,
+    <AdminLayout />,
     </AdminRoutes>),
     
   
