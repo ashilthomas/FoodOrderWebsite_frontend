@@ -110,7 +110,8 @@ const Dropdown = () => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
-        <MenuButton className="inline-flex w-full justify-center  rounded-md bg-inherit pl-3    text-white">
+        <MenuButton className="inline-flex w-full justify-center  rounded-md bg-inherit pl-3
+         text-white">
           filter
         </MenuButton>
       </div>

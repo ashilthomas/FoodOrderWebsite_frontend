@@ -10,6 +10,8 @@ import instance from '../Axios';
 
 const Restaurants = () => {
   const { loading, data, error } = useSelector((state) => state.menusData);
+  console.log(data);
+  
   const {token} =useSelector((state)=>state.tokenData)
   const [clickedFilter, setClickedFilter] = useState('');
   const dispatch = useDispatch();
