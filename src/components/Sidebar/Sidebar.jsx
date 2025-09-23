@@ -6,6 +6,7 @@ const Sidebar = () => {
     { name: 'Add restaurant', path: '/addrestaurant' },
     { name: 'Add menus', path: '/admin' },
     { name: 'Add customization', path: '/addcustomization' },
+    { name: 'userList', path: '/userlist' },
     { name: 'Order', path: '/about' },
     { name: 'Events', path: '/about' },
     { name: 'Coupon', path: '/addcoupon' },

@@ -27,6 +27,8 @@ function Signin() {
 
       const onSubmit = async(data)=>{
         const res = await instance.post("user/login",data,{withCredentials:true})
+        console.log(res.data.role);
+        
         dispatch(setUser(res.data.user))
 
         sessionStorage.setItem("token", res.data.token);

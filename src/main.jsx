@@ -24,6 +24,7 @@ import AddCustomization from "./components/Admin/AddCustomization/AddCustomizati
 import AddCoupons from "./components/Admin/AddCoupons/AddCoupons.jsx";
 import AdminRoutes from "./components/Utils/protectedRoutes/AdminRoutes.js";
 import UserRoute from "./components/Utils/protectedRoutes/UserRoute.js";
+import UserList from "./pages/UserList/UserList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -99,6 +100,9 @@ const router = createBrowserRouter([
       },{
         path:"/addcoupon",
         element:<AddCoupons/>
+      },{
+      path:"/userlist",
+      element:<UserList/>
       }
     ],
   },

@@ -17,6 +17,11 @@ function Header({ setOpen }) {
   const {token} =useSelector((state)=>state.tokenData)
   const {isAdmin} =useSelector((state)=>state.tokenData)
   
+  console.log(isAdmin.role ==="admin");
+  console.log(isAdmin.role);
+  
+  
+  
  
   
   const navigate=useNavigate()
