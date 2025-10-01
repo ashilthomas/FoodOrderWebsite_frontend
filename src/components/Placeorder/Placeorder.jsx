@@ -90,7 +90,8 @@ const Placeorder = () => {
     console.log("orderddddsss",order);
 
     const option = {
-      key: import.meta.env.VITE_SOME_KEY,
+      key: "rzp_test_RHODgzsdukR10r",
+   
       amount: order.amount,
       currency: order.currency,
       name: "Ashil Codder",

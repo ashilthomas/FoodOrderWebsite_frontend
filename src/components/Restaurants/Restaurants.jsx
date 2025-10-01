@@ -10,9 +10,14 @@ import instance from '../Axios';
 
 const Restaurants = () => {
   const { loading, data, error } = useSelector((state) => state.menusData);
-  console.log(data);
+  console.log("jlkkfjlkjf",data);
   
-  const {token} =useSelector((state)=>state.tokenData)
+
+
+  
+
+  
+  
   const [clickedFilter, setClickedFilter] = useState('');
   const dispatch = useDispatch();
   
@@ -58,8 +63,10 @@ const Restaurants = () => {
     const fetchItems = async () => {
       dispatch(fetchMenusStart());
       try {
-        const res = await instance.get("menus/allfoods");
-        dispatch(fetchMenusSuccess(res.data.allMenus));
+        const res = await instance.get("restaurent/allrestaurant");
+        console.log(res.data);
+        
+        dispatch(fetchMenusSuccess(res.data));
       } catch (error) {
         dispatch(fetchMenusFailure());
         console.error('Error fetching menu items by rating:', error);
