@@ -13,9 +13,9 @@ const AdminRoutes = ({ children }) => {
   useEffect(() => {
     const checkUser = async () => {
       try {
-        const res = await instance.get("user/checkAdmin", {
+        const res = await instance.get("user/checkadmin", {
           headers: {
-            'Authorization': ` ${token}` // Pass the token here
+            'Authorization': `Bearer ${token}` // Pass the token here
           }
         });
 

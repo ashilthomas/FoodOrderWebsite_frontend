@@ -19,7 +19,7 @@ const UserRoute = ({ children }) => {
       try {
         const res = await instance.get("user/checkuser",  {
             headers: {
-              'Authorization': ` ${token}` // Pass the token here
+              'Authorization': `Bearer ${token}` // Pass the token here
             }
           });
 
