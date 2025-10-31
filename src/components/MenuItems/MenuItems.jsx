@@ -33,11 +33,11 @@ function RestaurantMenuItems() {
         setCategoriesLoding(false)
        
         if(res.data.success){
-      
-       
-         setTimeout( setRestaurantsCategory(res.data.items),5000)
-         
-         
+
+
+         setRestaurantsCategory(res.data.items)
+
+
         }else{
           setNoitem(res.data.message)
         }

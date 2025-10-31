@@ -40,8 +40,8 @@ useEffect(() => {
   const fetchRestaurantsData = async () => {
     try {
       setLoading(true)
-      const res = await instance.post("menus/restaurantitems", {id} );
-      const restaurant = await instance.post("restaurent/singlerestaurant",{id} );
+      const res = await instance.get(`menus/restaurantitems?id=${id}`);
+      const restaurant = await instance.get(`restaurent/singlerestaurant?id=${id}`);
       setSingleRestaurant(restaurant.data.restaurant);
       setRestaurantItems(res.data.restaurantItem);
       setLoading(false)
@@ -391,7 +391,7 @@ const MenuItem = ({items} ) => {
   const handleOpenOverlay = async(id) => {
     console.log(id);
 
-    const res = await instance.post("menus/singleMenuItems",{id})
+    const res = await instance.get(`menus/singlemenuitems?id=${id}`)
     setSinglMenuItems(res.data.menuItem)
     setOverlayVisible(true);
   };

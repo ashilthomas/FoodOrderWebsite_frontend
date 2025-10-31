@@ -63,13 +63,13 @@ const Restaurants = () => {
     const fetchItems = async () => {
       dispatch(fetchMenusStart());
       try {
-        const res = await instance.get("restaurent/allrestaurant");
+        const res = await instance.get("menus/allfoods");
         console.log(res.data);
-        
-        dispatch(fetchMenusSuccess(res.data));
+
+        dispatch(fetchMenusSuccess(res.data.allMenus));
       } catch (error) {
         dispatch(fetchMenusFailure());
-        console.error('Error fetching menu items by rating:', error);
+        console.error('Error fetching menu items:', error);
       }
     };
     fetchItems();
@@ -80,25 +80,25 @@ const Restaurants = () => {
       <h2 className="text-2xl font-extrabold text-gray-900 mb-6">Top Restaurants</h2>
       <div className="flex space-x-2 mb-7 whitespace-nowrap overflow-x-auto">
       <button
-          onClick={() => {
-            setClickedFilter('All');
-            // Reset to show all restaurants
-            const fetchItems = async () => {
-              dispatch(fetchMenusStart());
-              try {
-                const res = await instance.get("restaurent/allrestaurant");
-                dispatch(fetchMenusSuccess(res.data));
-              } catch (error) {
-                dispatch(fetchMenusFailure());
-                console.error('Error fetching all restaurants:', error);
-              }
-            };
-            fetchItems();
-          }}
-          className={`border rounded-full px-4 py-1 ${clickedFilter === 'All' ? 'bg-orange-500 text-white' : 'hover:bg-orange-500 hover:text-white'}`}
-        >
-          All
-        </button>
+        onClick={() => {
+          setClickedFilter('All');
+          // Reset to show all restaurants
+          const fetchItems = async () => {
+            dispatch(fetchMenusStart());
+            try {
+              const res = await instance.get("menus/allfoods");
+              dispatch(fetchMenusSuccess(res.data.allMenus));
+            } catch (error) {
+              dispatch(fetchMenusFailure());
+              console.error('Error fetching all restaurants:', error);
+            }
+          };
+          fetchItems();
+        }}
+        className={`border rounded-full px-4 py-1 ${clickedFilter === 'All' ? 'bg-orange-500 text-white' : 'hover:bg-orange-500 hover:text-white'}`}
+      >
+        All
+      </button>
         <button
           onClick={fetchByRating}
           className={`border rounded-full px-4 py-1 ${clickedFilter === 'rating' ? 'bg-orange-500 text-white' : 'hover:bg-orange-500 hover:text-white'}`}
@@ -291,3 +291,4 @@ export default Restaurants;
 // };
 
 // export default Restaurants;
+
