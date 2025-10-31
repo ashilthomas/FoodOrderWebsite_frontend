@@ -31,7 +31,7 @@ const Restaurants = () => {
       dispatch(fetchMenusSuccess(res.data.menuItems || res.data));
     } catch (error) {
       dispatch(fetchMenusFailure());
-      console.error('Error fetching menu items:', error);
+      console.error('Error fetching filtered menu items:', error);
     }
   };
 
@@ -43,7 +43,7 @@ const Restaurants = () => {
       dispatch(fetchMenusSuccess(res.data.menuItems || res.data));
     } catch (error) {
       dispatch(fetchMenusFailure());
-      console.error('Error fetching menu items by rating:', error);
+      console.error('Error fetching restaurants by rating:', error);
     }
   };
 
@@ -55,7 +55,7 @@ const Restaurants = () => {
       dispatch(fetchMenusSuccess(res.data.menuItems || res.data));
     } catch (error) {
       dispatch(fetchMenusFailure());
-      console.error('Error fetching menu items by cuisine type:', error);
+      console.error('Error fetching restaurants by cuisine type:', error);
     }
   };
 
@@ -63,13 +63,13 @@ const Restaurants = () => {
     const fetchItems = async () => {
       dispatch(fetchMenusStart());
       try {
-        const res = await instance.get("menus/allfoods");
+        const res = await instance.get("restaurent/allrestaurant");
         console.log(res.data);
 
-        dispatch(fetchMenusSuccess(res.data.allMenus));
+        dispatch(fetchMenusSuccess(res.data));
       } catch (error) {
         dispatch(fetchMenusFailure());
-        console.error('Error fetching menu items:', error);
+        console.error('Error fetching restaurants:', error);
       }
     };
     fetchItems();
@@ -86,8 +86,8 @@ const Restaurants = () => {
           const fetchItems = async () => {
             dispatch(fetchMenusStart());
             try {
-              const res = await instance.get("menus/allfoods");
-              dispatch(fetchMenusSuccess(res.data.allMenus));
+              const res = await instance.get("restaurent/allrestaurant");
+              dispatch(fetchMenusSuccess(res.data));
             } catch (error) {
               dispatch(fetchMenusFailure());
               console.error('Error fetching all restaurants:', error);
@@ -291,4 +291,5 @@ export default Restaurants;
 // };
 
 // export default Restaurants;
+
 
