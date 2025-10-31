@@ -10,7 +10,7 @@ import instance from '../Axios';
 
 const Restaurants = () => {
   const { loading, data, error } = useSelector((state) => state.menusData);
-  console.log("jlkkfjlkjf",data);
+
   
 
 
