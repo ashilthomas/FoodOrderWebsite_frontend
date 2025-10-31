@@ -28,7 +28,7 @@ const Restaurants = () => {
     dispatch(fetchMenusStart());
     try {
       const res = await instance.get(`menus/itemsfilter/?price=${val}`);
-      dispatch(fetchMenusSuccess(res.data));
+      dispatch(fetchMenusSuccess(res.data.menuItems || res.data));
     } catch (error) {
       dispatch(fetchMenusFailure());
       console.error('Error fetching menu items:', error);
@@ -40,7 +40,7 @@ const Restaurants = () => {
     dispatch(fetchMenusStart());
     try {
       const res = await instance.get("menus/itemsfilter/?sort=rating");
-      dispatch(fetchMenusSuccess(res.data));
+      dispatch(fetchMenusSuccess(res.data.menuItems || res.data));
     } catch (error) {
       dispatch(fetchMenusFailure());
       console.error('Error fetching menu items by rating:', error);
@@ -51,11 +51,11 @@ const Restaurants = () => {
     setClickedFilter('pure-veg');
     dispatch(fetchMenusStart());
     try {
-      const res = await instance.get("menus/itemsfilter/?cuisinetype=vege");
-      dispatch(fetchMenusSuccess(res.data));
+      const res = await instance.get("menus/itemsfilter/?cuisinetype=veg");
+      dispatch(fetchMenusSuccess(res.data.menuItems || res.data));
     } catch (error) {
       dispatch(fetchMenusFailure());
-      console.error('Error fetching menu items by rating:', error);
+      console.error('Error fetching menu items by cuisine type:', error);
     }
   };
 
@@ -80,6 +80,21 @@ const Restaurants = () => {
       <h2 className="text-2xl font-extrabold text-gray-900 mb-6">Top Restaurants</h2>
       <div className="flex space-x-2 mb-7 whitespace-nowrap overflow-x-auto">
       <button
+          onClick={() => {
+            setClickedFilter('All');
+            // Reset to show all restaurants
+            const fetchItems = async () => {
+              dispatch(fetchMenusStart());
+              try {
+                const res = await instance.get("restaurent/allrestaurant");
+                dispatch(fetchMenusSuccess(res.data));
+              } catch (error) {
+                dispatch(fetchMenusFailure());
+                console.error('Error fetching all restaurants:', error);
+              }
+            };
+            fetchItems();
+          }}
           className={`border rounded-full px-4 py-1 ${clickedFilter === 'All' ? 'bg-orange-500 text-white' : 'hover:bg-orange-500 hover:text-white'}`}
         >
           All
@@ -99,7 +114,7 @@ const Restaurants = () => {
         </button>
         <button
           onClick={() => fetchMenuItems(200)}
-          className={`border rounded-full px-4 py-1 ${clickedFilter === 'price-100' ? 'bg-orange-500 text-white' : 'hover:bg-orange-500 hover:text-white'}`}
+          className={`border rounded-full px-4 py-1 ${clickedFilter === 'price-200' ? 'bg-orange-500 text-white' : 'hover:bg-orange-500 hover:text-white'}`}
         >
           Less than Rs. 200
         </button>

@@ -29,7 +29,7 @@ function RestaurantMenuItems() {
     const fetchCategoryItems = async () => {
       try {
         setCategoriesLoding(true)
-        const res = await instance.post("menus/categoryitems",{ category: category.items });
+        const res = await instance.get(`menus/categoryitems?category=${category.items}`);
         setCategoriesLoding(false)
        
         if(res.data.success){
