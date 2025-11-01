@@ -61,43 +61,45 @@ fetchCategoryItems()
       <p className="mb-6">
         Taste these delectable classics, delectable biryanis to make your day.
       </p>
-      <div className="flex flex-wrap space-x-4 mb-6 ">
-        <button className="flex-grow sm:flex-grow-0  bg-orange-600 rounded text-white flex gap-2 items-center mb-2">
-          <Dropdown />{" "}
-          <span className="pl-1 pr-2">
-            <IoFilter />
-          </span>
+      <div className="flex flex-wrap gap-3 mb-6">
+        <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+          <IoFilter />
+          Filter
         </button>
-        <button className="flex-grow sm:flex-grow-0 sm:px-4 py-2 bg-orange-600 rounded text-white flex gap-2 items-center mb-2">
-          Sort By{" "}
-          <span>
-            <IoIosArrowDown />
-          </span>
+        <button className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors">
+          Sort By
+          <IoIosArrowDown />
         </button>
-        <button  className="flex-grow sm:flex-grow-0 px-4 py-2 bg-orange-600 rounded text-white mb-2">
+        <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors">
           Less than 30 mins
         </button>
-        <button  className="flex-grow sm:flex-grow-0 px-4 py-2 bg-orange-600 rounded text-white mb-2">
+        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors">
           Rs. 300-Rs. 600
         </button>
-        <button  className="flex-grow sm:flex-grow-0 px-4 py-2 bg-orange-600 rounded text-white mb-2">
+        <button className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition-colors">
           Less than Rs. 300
         </button>
       </div>
 
-      <h2 className="text-2xl font-semibold mb-4">Restaurants to explore</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <h2 className="text-2xl font-semibold mb-4">Menu Items</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {categoriesLoading ? (
           <>
             <CardSkeleton />
             <CardSkeleton />
             <CardSkeleton />
             <CardSkeleton />
+            <CardSkeleton />
+            <CardSkeleton />
           </>
-        ) : (
-          restaurantsCategory?.map((restaurant) => (
-            <Cards key={restaurant.name} dish={restaurant} />
+        ) : restaurantsCategory && restaurantsCategory.length > 0 ? (
+          restaurantsCategory.map((item) => (
+            <Cards key={item._id} dish={item} />
           ))
+        ) : (
+          <div className="col-span-full text-center py-8 text-gray-500">
+            No items found in this category.
+          </div>
         )}
       </div>
       <p className="text-center"> {noItem}</p>
@@ -173,3 +175,4 @@ const Dropdown = () => {
 };
 
 export default RestaurantMenuItems;
+

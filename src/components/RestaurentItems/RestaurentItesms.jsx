@@ -2,20 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Itemdetails from '../itemDetails/Itemdetails';
 
 import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
   Menu,
   MenuButton,
   MenuItem as HeadlessMenuItem,
   MenuItems,
   Transition,
-  TransitionChild,
 } from '@headlessui/react';
-import { XMarkIcon } from '@heroicons/react/24/outline';
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid';
+import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { useParams } from 'react-router-dom';
 import instance from '../Axios';
 import { Skeleton, Stack } from '@chakra-ui/react';
@@ -23,7 +16,6 @@ import { Skeleton, Stack } from '@chakra-ui/react';
 
 
 const RestaurentItems = () => {
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [restaurantItems,setRestaurantItems]=useState([])
   const [singrestaurant,setSingleRestaurant]=useState({})
   const [loading,setLoading]=useState(false)
@@ -42,6 +34,8 @@ useEffect(() => {
       setLoading(true)
       const res = await instance.get(`menus/restaurantitems?id=${id}`);
       const restaurant = await instance.get(`restaurent/singlerestaurant?id=${id}`);
+      console.log("Restaurant data:", restaurant.data);
+      console.log("Restaurant items:", res.data);
       setSingleRestaurant(restaurant.data.restaurant);
       setRestaurantItems(res.data.restaurantItem);
       setLoading(false)
@@ -59,49 +53,6 @@ const sortOptions = [
   { name: 'Price: Low to High', href: '#', current: false },
   { name: 'Price: High to Low', href: '#', current: false },
 ];
-
-const subCategories = [
-  { name: 'burger', href: '#' },
-  { name: 'biriyani', href: '#' },
-  { name: 'pizza', href: '#' },
-  { name: 'samoza', href: '#' },
-  { name: 'noodils', href: '#' },
-];
-
-const filters = [
-  {
-    id: 'color',
-    name: 'Color',
-    options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
-    ],
-  },
-  {
-    id: 'category',
-    name: 'Category',
-    options: [
-      { value: 'Rolle', label: 'Rolles', checked: false },
-      { value: 'Pizza', label: 'Pizza', checked: false },
-      { value: 'Deserts', label: 'Deserts', checked: true },
-      { value: 'Salad', label: 'Salad', checked: false },
-      { value: 'cake', label: 'cake', checked: false },
-    ],
-  },{
-    id: 'size',
-    name: 'Size',
-    options: [
-      { value: 'M', label: 'M', checked: false },
-      { value: 'S', label: 'S', checked: false },
-      { value: 'L', label: 'L', checked: false },
-      
-    ],
-  },
-];
  
 
 
@@ -111,122 +62,26 @@ const filters = [
 
   return (
     <div className="bg-white">
-          <div className="text-center mb-8 bg-fixed py-20 bg-[url('')] bg-cover bg-center restaurant-bg">
-                  <h1 className="text-3xl font-bold text-white">{singrestaurant.title}</h1>
-                    <div className="text-gray-500">{singrestaurant.location}</div>
-                    <div className="flex justify-center items-center mt-2 text-green-500">
-                      <span>4.0km</span>
-                      <span className="mx-2">•</span>
-                      <span>{singrestaurant.rating}</span>
+          <div className="text-center mb-8 bg-gradient-to-r from-orange-400 to-orange-600 py-20">
+                  <h1 className="text-3xl font-bold text-white">{singrestaurant.title || 'Restaurant'}</h1>
+                    <div className="text-orange-100 mt-2">{singrestaurant.location || 'Location not available'}</div>
+                    <div className="flex justify-center items-center mt-4 text-white">
+                      <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm">4.0km</span>
+                      <span className="mx-3 text-orange-200">•</span>
+                      <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-sm flex items-center">
+                        ⭐ {singrestaurant.rating || 'N/A'}
+                      </span>
                     </div>
                   </div>
       <div>
-        {/* Mobile filter dialog */}
-        <Transition show={mobileFiltersOpen}>
-          <Dialog className="relative z-40 lg:hidden" onClose={setMobileFiltersOpen}>
-            <TransitionChild
-              enter="transition-opacity ease-linear duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="transition-opacity ease-linear duration-300"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <div className="fixed inset-0 bg-black bg-opacity-25" />
-            </TransitionChild>
 
-            <div className="fixed inset-0 z-40 flex">
-              <TransitionChild
-                enter="transition ease-in-out duration-300 transform"
-                enterFrom="translate-x-full"
-                enterTo="translate-x-0"
-                leave="transition ease-in-out duration-300 transform"
-                leaveFrom="translate-x-0"
-                leaveTo="translate-x-full"
-              >
-                <DialogPanel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
-                  <div className="flex items-center justify-between px-4">
-                    <h2 className="text-lg font-medium text-gray-900">Filters</h2>
-                    <button
-                      type="button"
-                      className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
-                      onClick={() => setMobileFiltersOpen(false)}
-                    >
-                      <span className="sr-only">Close menu</span>
-                      <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                    </button>
-                  </div>
-
-                  {/* Filters */}
-                  <form className="mt-4 border-t border-gray-200">
-                    <h3 className="sr-only">Categories</h3>
-                    <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                      {subCategories.map((category) => (
-                        <li key={category.name}>
-                          <a href={category.href} className="block px-2 py-3">
-                            {category.name}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {filters.map((section) => (
-                      <Disclosure as="div" key={section.id} className="border-t border-gray-200 px-4 py-6">
-                        {({ open }) => (
-                          <>
-                            <h3 className="-mx-2 -my-3 flow-root">
-                              <DisclosureButton className="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                                <span className="font-medium text-gray-900">{section.name}</span>
-                                <span className="ml-6 flex items-center">
-                                  {open ? (
-                                    <MinusIcon className="h-5 w-5" aria-hidden="true" />
-                                  ) : (
-                                    <PlusIcon className="h-5 w-5" aria-hidden="true" />
-                                  )}
-                                </span>
-                              </DisclosureButton>
-                            </h3>
-                            <DisclosurePanel className="pt-6">
-                              <div className="space-y-6">
-                                {section.options.map((option, optionIdx) => (
-                                  <div key={option.value} className="flex items-center">
-                                    <input
-                                      id={`filter-mobile-${section.id}-${optionIdx}`}
-                                      name={`${section.id}[]`}
-                                      defaultValue={option.value}
-                                      type="checkbox"
-                                      defaultChecked={option.checked}
-                                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                    />
-                                    <label
-                                      htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                                      className="ml-3 min-w-0 flex-1 text-gray-500"
-                                    >
-                                      {option.label}
-                                    </label>
-                                  </div>
-                                ))}
-                              </div>
-                            </DisclosurePanel>
-                          </>
-                        )}
-                      </Disclosure>
-                    ))}
-                  </form>
-                </DialogPanel>
-              </TransitionChild>
-            </div>
-          </Dialog>
-        </Transition>
-
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 ">
-          
-
-            <div className="flex items-center">
+        <main className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between py-6 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-900">Menu</h2>
+            <div className="flex items-center space-x-4">
               <Menu as="div" className="relative inline-block text-left">
                 <div>
-                  <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
+                  <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900 bg-white border border-gray-300 rounded-md px-3 py-2">
                     Sort
                     <ChevronDownIcon
                       className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
@@ -265,118 +120,38 @@ const filters = [
                   </MenuItems>
                 </Transition>
               </Menu>
-
-              <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-                onClick={() => setMobileFiltersOpen(true)}
-              >
-                <span className="sr-only">Filters</span>
-                <FunnelIcon className="h-5 w-5" aria-hidden="true" />
-              </button>
             </div>
           </div>
+<section aria-labelledby="products-heading" className="pb-24 pt-6">
+  <h2 id="products-heading" className="sr-only">
+    Products
+  </h2>
 
-          <section aria-labelledby="products-heading" className="pb-24 pt-6">
-            <h2 id="products-heading" className="sr-only">
-              Products
-            </h2>
-
-            <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
-              {/* Filters */}
-              <form className="hidden lg:block">
-                <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
-
-
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href}>{category.name}</a>
-                    </li>
-                  ))}
-                </ul>
-
-                {filters.map((section) => (
-                  <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
-                    {({ open }) => (
-                      <>
-                        <h3 className="-my-3 flow-root">
-                          <DisclosureButton className="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                            <span className="font-medium text-gray-900">{section.name}</span>
-                            <span className="ml-6 flex items-center">
-                              {open ? (
-                                <MinusIcon className="h-5 w-5" aria-hidden="true" />
-                              ) : (
-                                <PlusIcon className="h-5 w-5" aria-hidden="true" />
-                              )}
-                            </span>
-                          </DisclosureButton>
-                        </h3>
-                        <DisclosurePanel className="pt-6">
-                          <div className="space-y-4">
-                            {section.options.map((option, optionIdx) => (
-                              <div key={option.value} className="flex items-center">
-                                <input
-                                  id={`filter-${section.id}-${optionIdx}`}
-                                  name={`${section.id}[]`}
-                                  defaultValue={option.value}
-                                  type="checkbox"
-                                  defaultChecked={option.checked}
-                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                                />
-                                <label
-                                  htmlFor={`filter-${section.id}-${optionIdx}`}
-                                  className="ml-3 text-sm text-gray-600"
-                                >
-                                  {option.label}
-                                </label>
-                              </div>
-                            ))}
-                          </div>
-                        </DisclosurePanel>
-                      </>
-                    )}
-                  </Disclosure>
-                ))}
-              </form>
-
-              {/* Product grid */}
-              <div className="lg:col-span-3">
-                <div className="">
-                {/* className='max-w-2xl mx-auto mt-8'> */}
-                  <div >
-                    <h2 className="text-2xl font-semibold mb-4">Best Seller</h2>
-                    {
-                      loading?(
-<Stack>
-  <Skeleton height='20px' />
-  <Skeleton height='20px' />
-  <Skeleton height='20px' />
-</Stack>
-                      ):(
-                      restaurantItems && restaurantItems.map((items,i)=>(
-                        <MenuItem items={items} 
-                      />
-                      )))
-                    }
-                   
-                    <h2 className="text-2xl font-semibold mb-4">Special Combos</h2>
-                    <MenuItem 
-                      title="Burger & French fried combo"
-                      description="Your burger dish looks perfect combination of flavors and textures."
-                      price="30 / $60"
-                      rating="1k+ Ratings"
-                      image="https://images.pexels.com/photos/3026013/pexels-photo-3026013.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
-                    />
-                  </div>
-                </div>
-              </div>
+  <div className="max-w-4xl mx-auto">
+    <div className="mb-8">
+      <h2 className="text-2xl font-semibold mb-4">Menu Items</h2>
+      {
+        loading ? (
+          <Stack spacing={4}>
+            <Skeleton height='100px' />
+            <Skeleton height='100px' />
+            <Skeleton height='100px' />
+          </Stack>
+        ) : (
+          restaurantItems && restaurantItems.length > 0 ? (
+            restaurantItems.map((items, i) => (
+              <MenuItem key={items._id || i} items={items} />
+            ))
+          ) : (
+            <div className="text-center py-8 text-gray-500">
+              No menu items available for this restaurant.
             </div>
-          </section>
+          )
+        )
+      }
+    </div>
+  </div>
+</section>
         </main>
       </div>
     </div>
@@ -384,43 +159,47 @@ const filters = [
 };
 
 const MenuItem = ({items} ) => {
-  console.log(items);
-  const [isOverlayVisible, setOverlayVisible] = useState(false);
-  const [singleMenuItems,setSinglMenuItems]=useState({})
+   const [isOverlayVisible, setOverlayVisible] = useState(false);
+   const [singleMenuItems,setSinglMenuItems]=useState({})
 
-  const handleOpenOverlay = async(id) => {
-    console.log(id);
+   const handleOpenOverlay = async(id) => {
+     try {
+       const res = await instance.get(`menus/singlemenuitems?id=${id}`)
+       setSinglMenuItems(res.data.menuItem)
+       setOverlayVisible(true);
+     } catch (error) {
+       console.error("Error fetching menu item details:", error);
+     }
+   };
 
-    const res = await instance.get(`menus/singlemenuitems?id=${id}`)
-    setSinglMenuItems(res.data.menuItem)
-    setOverlayVisible(true);
-  };
+   const handleCloseOverlay = () => {
+     setOverlayVisible(false);
+   };
 
-  const handleCloseOverlay = () => {
-    setOverlayVisible(false);
-  };
-
-  return (
-    <>
-      <Itemdetails isVisible={isOverlayVisible} onClose={handleCloseOverlay} singleMenuItems={singleMenuItems} />
-      <div className="flex p-4 bg-white shadow rounded-lg mb-4">
-        <img className="w-24 h-24 object-cover rounded-lg mr-4" src={items?.image} alt={items?.title} />
-        <div className="flex-1">
-          <h3 className="text-lg font-semibold">{items?.title}</h3>
-          <div className="text-yellow-500 flex items-center mb-2">
-            <span className="mr-2">{items?.restaurant.rating}</span>
-            <span>⭐</span>
-          </div>
-          <p className="text-gray-600 mb-2">{items?.description}</p>
-          <div className="text-lg font-bold">${items?.price}</div>
-        </div>
-        <button onClick={()=>handleOpenOverlay(items._id)} className="bg-orange-500 text-white rounded-lg px-4 py-2 ml-4 self-start">
-          +Add
-        </button>
-      </div>
-    </>
-  );
-};
+   return (
+     <>
+       <Itemdetails isVisible={isOverlayVisible} onClose={handleCloseOverlay} singleMenuItems={singleMenuItems} />
+       <div className="flex p-4 bg-white shadow-md rounded-lg mb-4 border border-gray-200 hover:shadow-lg transition-shadow">
+         <img className="w-24 h-24 object-cover rounded-lg mr-4 flex-shrink-0" src={items?.image} alt={items?.title} />
+         <div className="flex-1 min-w-0">
+           <h3 className="text-lg font-semibold text-gray-900 truncate">{items?.title}</h3>
+           <div className="text-yellow-500 flex items-center mb-2">
+             <span className="mr-2 text-sm">{items?.restaurant?.rating || 'N/A'}</span>
+             <span>⭐</span>
+           </div>
+           <p className="text-gray-600 mb-2 text-sm line-clamp-2">{items?.description}</p>
+           <div className="text-lg font-bold text-green-600">${items?.price}</div>
+         </div>
+         <button
+           onClick={()=>handleOpenOverlay(items._id)}
+           className="bg-orange-500 hover:bg-orange-600 text-white rounded-lg px-4 py-2 ml-4 self-start transition-colors flex-shrink-0"
+         >
+           +Add
+         </button>
+       </div>
+     </>
+   );
+ };
 
 export default RestaurentItems;
 
@@ -449,6 +228,9 @@ export default RestaurentItems;
 
     
  
+
+
+
 
 
 
