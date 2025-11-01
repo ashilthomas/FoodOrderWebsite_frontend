@@ -119,10 +119,31 @@ const Add = () => {
 
   const handleRemove = async (id) => {
     try {
-      await instance.delete(`/api/menus/${id}`);
-      setMenuItems(menuItems.filter((item) => item._id !== id)); // Remove item from the list
+      const response = await instance.delete(`menus/${id}`);
+      if (response.data.success) {
+        toast({
+          title: "Menu item deleted successfully",
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+        setMenuItems(menuItems.filter((item) => item._id !== id)); // Remove item from the list
+      } else {
+        toast({
+          title: response.data.message || "Failed to delete menu item",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     } catch (error) {
       console.error("There was an error deleting the menu item:", error);
+      toast({
+        title: "Failed to delete menu item",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 

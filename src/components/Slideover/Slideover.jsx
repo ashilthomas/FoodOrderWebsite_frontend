@@ -8,32 +8,81 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import instance from "../Axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getallCartItems } from "../../Redux/cart";
+import { useToast } from '@chakra-ui/react';
 
 export default function Slideover({ open, setOpen }) {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cartData.cartItems || []);
   const token = sessionStorage.getItem('token');
+  const toast = useToast();
+  const [isRemoving, setIsRemoving] = useState(false);
 
-  useEffect(() => {
-    const fetchCartItems = async () => {
+  const fetchCartItems = async () => {
+    try {
       const res = await instance.get("cart/allcartitems", {
-
         headers: {
-          'Authorization': ` ${token}` // Pass the token here
+          'Authorization': `Bearer ${token}`
         }
       });
-    
-      dispatch(getallCartItems(res.data.cart));
-    };
-   
+
+      if (res.data.success) {
+        dispatch(getallCartItems(res.data.cart));
+      }
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
+
+  const handleRemoveItem = async (productId) => {
+    setIsRemoving(true);
+    try {
+      const res = await instance.delete("cart/removeitem", {
+        data: { productId },
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (res.data.success) {
+        toast({
+          title: "Item removed from cart",
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        });
+        // Refresh cart items after removal
+        await fetchCartItems();
+      } else {
+        toast({
+          title: res.data.message || "Failed to remove item",
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      console.error("Remove item error:", error);
+      toast({
+        title: error.response?.data?.message || "Failed to remove item",
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+    } finally {
+      setIsRemoving(false);
+    }
+  };
+
+  useEffect(() => {
+    if (open && token) {
       fetchCartItems();
-  
-  }, [ dispatch,open]);
+    }
+  }, [dispatch, open, token]);
 
   return (
     <Transition show={open}>
@@ -125,9 +174,11 @@ export default function Slideover({ open, setOpen }) {
                                             <div className="flex">
                                               <button
                                                 type="button"
-                                                className="font-medium text-orange-500 hover:text-orange-600"
+                                                className="font-medium text-red-500 hover:text-red-600 disabled:opacity-50"
+                                                onClick={() => handleRemoveItem(item.productId._id)}
+                                                disabled={isRemoving}
                                               >
-                                                Remove
+                                                {isRemoving ? 'Removing...' : 'Remove'}
                                               </button>
                                             </div>
                                           </div>
@@ -144,24 +195,40 @@ export default function Slideover({ open, setOpen }) {
                     </div>
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                      <div className="flex justify-between text-base font-medium text-gray-900">
-                        <p>Subtotal</p>
-                        <p>$262.00</p>
-                      </div>
-                      <p className="mt-0.5 text-sm text-gray-500">
-                        Shipping and taxes calculated at checkout.
-                      </p>
-                      <div className="mt-6">
-                        <Link to={"/placeorder"}>
-                          <a
+                      {cartItems.length > 0 && cartItems.some(cart => cart.items && cart.items.length > 0) ? (
+                        <>
+                          <div className="flex justify-between text-base font-medium text-gray-900">
+                            <p>Subtotal</p>
+                            <p>${cartItems.reduce((total, cart) => total + (cart.totalPrice || 0), 0).toFixed(2)}</p>
+                          </div>
+                          <p className="mt-0.5 text-sm text-gray-500">
+                            Shipping and taxes calculated at checkout.
+                          </p>
+                          <div className="mt-6">
+                            <Link to={"/placeorder"}>
+                              <a
+                                onClick={() => setOpen(false)}
+                                href="#"
+                                className="flex items-center justify-center rounded-md border border-transparent bg-orange-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-orange-700"
+                              >
+                                Checkout
+                              </a>
+                            </Link>
+                          </div>
+                        </>
+                      ) : (
+                        <div className="text-center py-6">
+                          <p className="text-gray-500 text-sm">Your cart is empty</p>
+                          <button
+                            type="button"
+                            className="mt-4 font-medium text-orange-600 hover:text-orange-500"
                             onClick={() => setOpen(false)}
-                            href="#"
-                            className="flex items-center justify-center rounded-md border border-transparent bg-orange-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-orange-700"
                           >
-                            Checkout
-                          </a>
-                        </Link>
-                      </div>
+                            Continue shopping
+                            <span aria-hidden="true"> &rarr;</span>
+                          </button>
+                        </div>
+                      )}
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>
                           or{" "}

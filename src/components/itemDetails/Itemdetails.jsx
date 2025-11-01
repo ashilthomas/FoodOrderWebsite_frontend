@@ -195,8 +195,8 @@ function Itemdetails({ isVisible, onClose, singleMenuItems }) {
   const toast = useToast()
 
 
-  const [selectedSize, setSelectedSize] = useState(singleMenuItems?.customization?.sizeOptions[0]?.name || "Size S");
-  const [selectedSauce, setSelectedSauce] = useState(singleMenuItems?.customization?.sauceOptions[0]?.name || "Mustard");
+  const [selectedSize, setSelectedSize] = useState(singleMenuItems?.customization?.sizeOptions?.[0]?.name || "Size S");
+  const [selectedSauce, setSelectedSauce] = useState(singleMenuItems?.customization?.sauceOptions?.[0]?.name || "Mustard");
 
 
 const dispatch =useDispatch()
@@ -212,65 +212,78 @@ const dispatch =useDispatch()
   };
 
   const handleAddToCart = async (id) => {
-    const sizeOption = singleMenuItems.customization.sizeOptions.find(size => size.name === selectedSize);
-  
-    const sauceOption = singleMenuItems.customization.sauceOptions.find(sauce => sauce.name === selectedSauce);
+    const sizeOption = singleMenuItems?.customization?.sizeOptions?.find(size => size.name === selectedSize);
+    const sauceOption = singleMenuItems?.customization?.sauceOptions?.find(sauce => sauce.name === selectedSauce);
+
+    if (!sizeOption || !sauceOption) {
+      toast({
+        title: "Please select size and sauce options",
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
 
     const customization = [
       { name: selectedSize, price: sizeOption.price },
       { name: selectedSauce, price: sauceOption.price }
     ];
- 
 
     const payload = {
-     
       productId: id,
       quantity,
       customization
     };
 
- 
-
-  try {
-    const res = await instance.post("cart/addtocart", payload, {
-      headers: {
-        'Authorization': ` ${token}` // Pass the token here
+    try {
+      const res = await instance.post("cart/addtocart", payload, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      dispatch(setResDetails(res.data));
+      if (res.data.success) {
+        toast({
+          title: res.data.message,
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: res.data.message,
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
       }
-    });
-    dispatch(setResDetails(res.data));
-    if (res.data.success) {
-      toast({
-        title: res.data.message,
-        status: 'success',
-        duration: 9000,
-        isClosable: true,
-      });
-    } else {
-      toast({
-        title: res.data.message,
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-  } catch (error) {
-    if (error.response && error.response.status === 403) {
-      toast({
-        title: "Token expired. Please log in again.",
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      });
-    } else {
-      toast({
-        title: error.response.message,
-        status: 'error',
-        duration: 9000,
-        isClosable: true,
-      });
+    } catch (error) {
+      console.error("Add to cart error:", error);
+      if (error.response?.status === 401) {
+        toast({
+          title: "Please log in to add items to cart",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      } else if (error.response?.status === 403) {
+        toast({
+          title: "Token expired. Please log in again.",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: error.response?.data?.message || "Failed to add item to cart",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
+      }
     }
   }
-}
   return (
     <>
       {isVisible && (
@@ -379,3 +392,4 @@ const dispatch =useDispatch()
 }
 
 export default Itemdetails;
+

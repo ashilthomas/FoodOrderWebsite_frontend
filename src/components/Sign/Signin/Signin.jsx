@@ -29,7 +29,7 @@ function Signin() {
         const res = await instance.post("user/login",data,{withCredentials:true})
         console.log(res.data.role);
         
-        dispatch(setUser(res.data.user))
+        dispatch(setUser(res.data.user || res.data))
 
         sessionStorage.setItem("token", res.data.token);
         if(res.data.success){

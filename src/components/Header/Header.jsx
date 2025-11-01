@@ -16,9 +16,10 @@ function Header({ setOpen }) {
   const { cartItems} = useSelector((state)=>state.cartData)
   const {token} =useSelector((state)=>state.tokenData)
   const {isAdmin} =useSelector((state)=>state.tokenData)
-  
-  console.log(isAdmin.role ==="admin");
-  console.log(isAdmin.role);
+
+  console.log("isAdmin:", isAdmin);
+  console.log("isAdmin.role:", isAdmin?.role);
+  console.log("isAdmin.role === 'admin':", isAdmin?.role === "admin");
   
   
   
@@ -199,7 +200,7 @@ const handileLogout =()=>{
                           </Menu.Item>
 
                           {
-                            isAdmin.role ==="admin" && <Menu.Item>
+                            isAdmin?.role === "admin" && <Menu.Item>
                             {({ active }) => (
                               <Link to={"/admin"}>
                                 <span

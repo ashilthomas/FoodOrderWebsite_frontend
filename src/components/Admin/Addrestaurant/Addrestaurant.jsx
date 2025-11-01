@@ -64,8 +64,13 @@ const AddRestaurant = () => {
 
   const handleRemove = async (id) => {
     try {
-      await instance.delete(`restaurent/removerestaurant/${id}`);
-      setRestaurants(restaurants.filter((restaurant) => restaurant._id !== id));
+      const response = await instance.delete(`restaurent/${id}`);
+      if (response.data.success) {
+        toast.success('Restaurant deleted successfully');
+        setRestaurants(restaurants.filter((restaurant) => restaurant._id !== id));
+      } else {
+        toast.error(response.data.message || 'Failed to delete restaurant');
+      }
     } catch (error) {
       console.error('Error removing restaurant:', error);
       toast.error('Failed to remove restaurant. Please try again.');
