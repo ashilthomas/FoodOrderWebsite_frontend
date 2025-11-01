@@ -175,4 +175,3 @@ const Dropdown = () => {
 };
 
 export default RestaurantMenuItems;
-
